@@ -4,7 +4,7 @@
 ```{r set-up,  message=FALSE}
 library(ggplot2)
 library(viridis)
-#library(hrbrthemes)
+library(hrbrthemes)
 library(cmdstanr) 
 library(bayesplot)
 library(spatstat)

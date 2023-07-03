@@ -6,9 +6,10 @@ on:
 name: Quarto render
 
 jobs:
-  bookdown:
-    name: Render-Book
+  build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+        contents: write
     steps:
    
       - name: Check out repository
