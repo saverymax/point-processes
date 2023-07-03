@@ -8,6 +8,7 @@ book:
   chapters:
     - index.qmd
     - src/introduction.qmd
+    - src/theory.qmd
     - src/poisson-processes_presence-only.qmd
 
 bibliography: references.bib
