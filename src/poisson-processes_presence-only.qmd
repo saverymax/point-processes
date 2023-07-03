@@ -39,3 +39,342 @@ Remember that we are using as intensity $\lambda(A_i) = \int_A\lambda(s)ds = \in
 So note that we take the route of simulation depending on our available information. If we only have $x_i$ for each quadrat, directly generating the points as a poisson random variable is a good option because it avoids any complicated integrals. But if we have finer covariates than at the quadrat level we are working with, then thinning the process down with the approach of Banerjee and others is better because it also avoids the integrals and has finer resolution.
 
 There are a few things to during the data gerating process with the NHPP. The area of the total space, $|D|$, the area of each site (quadrat) $|A_i|$, and the number of cells $c$ that $D$ is discretized into. The area of $A$ depends on the number of discretizations (or cells): $|A_i| = |D|/c$. The intensity will be scaled by this factor $|D|/c$, so that as the area of $|A|$ becomes smaller, the intensity converges to that of a "true" continuous poisson process with its center at $A_i$. We also assume that the intensity is constant over $A$, so that we can indeed scale the intensity by the area factor, instead of needing to integrate over $A$. This assumption is in contrast to assuming that we model the instensity directly as $\Lambda(A_i) = \exp(\beta'X)$ (versus $\Lambda(A_i) = \frac{|D|}{c}\exp(\beta'X)$). 
+
+Thi following code generates observations at each site and plots observed intensities, bias, and counts.
+```{r data generation}
+area_D <- 100
+k <- 20
+sites <- k^2
+# Parameter values somewhere around Fithian 2015.
+alpha <- -2 
+beta <- 2
+gamma <- -2
+delta <- 0.5
+params <- list(alpha=alpha, beta=beta, gamma=gamma, delta=delta)
+# Plot all intensity functions
+grid_points <- get_sampling_surface_simple(k)
+distance_mat <- as.matrix(dist(grid_points[,1:2]))
+data_reps <- 1
+corr_matrix <- specify_corr(grid_points[,1:2])
+gp_bool <- F
+sim_data <- generate_ppp_data_r(grid_points, params, sites, data_reps, corr_matrix, gp_bool, area_D)
+Y_positive_indices <- which(sim_data$Y>0)
+# Check that total counts equal number of coordinates
+stopifnot(sum(sim_data$Y[Y_positive_indices]) == nrow(sim_data$coordinates))
+# This is the data and coordinates at which there are counts > 0
+sim_data$Y[Y_positive_indices]
+sim_data$Y_coords
+grid_points[Y_positive_indices,]
+# Use the final generation iteration
+p <- ggplot(grid_points, aes(x, y, fill=sim_data$lambda[data_reps,])) + 
+  geom_tile() +
+  scale_fill_viridis(discrete=FALSE) +
+  ggtitle("Generated intensity per site")
+print(p)
+
+p <- ggplot(grid_points, aes(x, y, fill=sim_data$bias[data_reps,])) + 
+  geom_tile() +
+  scale_fill_viridis(discrete=FALSE) +
+  ggtitle("Generated bias per site")
+print(p)
+
+thinned_intensity <- sim_data$lambda[data_reps,]*sim_data$bias[data_reps,]
+p <- ggplot() +
+  geom_tile(grid_points, mapping=aes(x, y, fill=thinned_intensity, width=1, height=1), alpha=.6) + 
+  scale_fill_viridis(discrete=FALSE, name="L*b") +
+  ggtitle("Generated thinning per site, including generated (or observed) individuals") +
+  geom_point(data=sim_data$Y_coords, mapping=aes(x=x, y=y), size=3, col="white") +
+  theme(panel.grid.minor = element_line(colour="white")) +
+  scale_y_continuous(breaks = seq(0, 20, 1)) +
+  scale_x_continuous(breaks = seq(0, 20, 1)) 
+print(p)
+# Then use the donut intensity with correlated bias
+aux_cor <- 0.7
+grid_points <- get_sampling_surface_donut(k)
+grid_points <- get_bias_surface_correlated(grid_points, aux_cor)
+sites <- sites/4
+grid_points <- grid_points %>% dplyr::filter(x<(k/2)+1, y<(k/2)+1)
+# Filter for only a quarter of the grid.
+# If we filter, we need to change the total sites as well
+# Need distances for LGCP
+distance_mat <- as.matrix(dist(grid_points[,1:2]))
+data_reps <- 1
+corr_matrix <- specify_corr(grid_points[,1:2])
+gp_bool <- F
+sim_data <- generate_ppp_data_r(grid_points, params, sites, data_reps, corr_matrix, gp_bool, area_D)
+Y_positive_indices <- which(sim_data$Y>0)
+stopifnot(sum(sim_data$Y[Y_positive_indices]) == nrow(sim_data$coordinates))
+sim_data$Y[Y_positive_indices]
+sim_data$Y_coords
+grid_points[Y_positive_indices,]
+# Use the final generation iteration
+p <- ggplot(grid_points, aes(x, y, fill=sim_data$lambda[data_reps,])) + 
+  geom_tile() +
+  scale_fill_viridis(discrete=FALSE) +
+  ggtitle("Generated intensity per site")
+print(p)
+
+p <- ggplot(grid_points, aes(x, y, fill=sim_data$bias[data_reps,])) + 
+  geom_tile() +
+  scale_fill_viridis(discrete=FALSE) +
+  ggtitle("Generated bias per site")
+print(p)
+
+thinned_intensity <- sim_data$lambda[data_reps,]*sim_data$bias[data_reps,]
+p <- ggplot() +
+  geom_tile(grid_points, mapping=aes(x, y, fill=thinned_intensity, width=1, height=1), alpha=.6) + 
+  scale_fill_viridis(discrete=FALSE, name="L*b") +
+  ggtitle("Generated thinning per site, including generated (or observed) individuals") +
+  geom_point(data=sim_data$Y_coords, mapping=aes(x=x, y=y), size=3, col="white") +
+  theme(panel.grid.minor = element_line(colour="white")) +
+  scale_y_continuous(breaks = seq(0, 20, 1)) +
+  scale_x_continuous(breaks = seq(0, 20, 1)) 
+print(p)
+```
+
+```{r stan-model, include=FALSE}
+source("stan_models/stan_thinned_poisson_process.R")
+model_path <- "stan_models/thinned_poisson_process.stan"
+```
+Next we fit the Thinned Nonhomogenous Poisson Process model in Stan. We can make a few observations about this model. First, examine the likelihood: 
+$$L(\lambda|Y) = \prod^{N}_{i=1}\frac{\lambda_i^{n_i}\exp[-\lambda_i]}{n_i!}$$. This is made using  the assumption that the counts at sites $s_i$ are distributed following a poisson process with mean $\lambda$. This assumption allows for a simpler specification of the likelihood, since we can use the poisson distribution. The setting of $|A|=1$ allows us to make this assumption, as we do not need to multiple the intensity parameter $\lambda$ by the area in the model.
+
+The next sections of code fitting and diagnosing the poisson process model in Stan, using the generated data.
+
+```{r stan-fit-pp, results='hide', messages=FALSE,cache=FALSE, eval=eval_pp}
+model_string <- stan_poisson_process
+write(model_string, model_path)
+# data_reps is 1 here so just use the first index
+data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,])
+model <- cmdstan_model(model_path)
+fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=10000, iter_warmup=1000, thin = 10)
+```
+
+```{r model-summary-pp, eval=eval_pp}
+fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
+```
+From the table above, we can observe that the parameters $\beta$ and $\delta$ have been recovered. However, due to the correlation of $\alpha$ and $\gamma$, only the sum $\alpha+\gamma$ can be correctly identified. Our "true" sum of was equal to -6, and we can see the estimate here is -5.5, an estimate which also incorporates prior information. The correlation between the two can be observed in the scatter plots below, as well as in the wide Confidence Interval of the posterior, relative to the other parameters.
+
+## Diagnostics
+
+Here we check goodness of fit and PPCs. We also discuss some advantages and disadvantages of PPCs. One thing I'm still interested in is goodness of fit and PPCs for species distribution models?
+
+```{r posterior-diagnostics-pp, eval=eval_pp}
+posterior <- fit$draws()
+color_scheme_set("mix-blue-pink")
+p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
+                      facet_args = list(nrow = 2, labeller = label_parsed))
+print(p_trace + facet_text(size = 15))
+
+plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
+p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("alpha", "beta")) + plot_title
+print(p_post)
+
+plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
+p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("gamma", "delta")) + plot_title
+print(p_post)
+
+
+mcmc_intervals(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
+#mcmc_hist(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta')) 
+plot_title <- ggtitle("Parameter posterior sample correlation")
+p_post <- mcmc_pairs(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
+print(p_post)
+mcmc_scatter(fit$draws(), pars=c('alpha','gamma'))
+```
+We can note the wide intervals on $\alpha$ and $\gamma$. Additionally the scatter plot shows the independence of $\beta$ and $\delta$ with the other parameters, as well as the correlation between $\alpha$ and $\gamma$.
+
+## PPD
+
+We next look at the Posterior Predictive Distribution (PPD) of the observations per site. That is, we plot the generated counts $Y_i$ for site $s_i$ on the sampling surface (grid). 
+
+The PPD can be expressed as the samples from the predictive distribution of $Y$ taking into account the uncertainty surrounding the parameters. The PPD can be written as
+$$
+p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
+$$
+
+such that the posterior uncertainty of the parameters is integrated out.
+
+Below we plot the generated values of $\tilde{y}$ for each site. Additionally, the generated quantities of intensity, bias, and intensity*bias ($\lambda\cdot b) per site are also plotted on the grid. 
+
+```{r ppd-data-pp, eval=eval_pp}
+generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
+lambda_thinned <- fit$summary(variables=generated_vars[1])$mean
+lambda_rep <- fit$summary(variables=generated_vars[2])$mean
+bias_rep <- fit$summary(variables=generated_vars[3])$mean
+y_ppd <- fit$summary(variables=generated_vars[4])$mean
+ppd_df <- data.frame(x=grid_points$x, y=grid_points$y, y_rep=y_ppd, lt=lambda_thinned, l=lambda_rep, b=bias_rep)
+head(ppd_df)
+```
+It is important to notice that while the thinned intensity is ostensibly realistic in estimation, the intensity and bias are not. This is due to the specification of the Thinned Poisson Process
+$$\lambda^* = \lambda(s)b(s)$$
+such that
+$$\lambda^* = \exp\left[\alpha + \beta*X(s) + \gamma + \delta*Z(s)\right]$$
+
+We can then see the generated data in the sampling surface:
+```{r ppd-plots-pp, eval=eval_pp}
+p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("PPD counts per site")
+print(p)
+
+p <- ggplot(ppd_df, aes(x, y, fill=lt)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Thinned intensity per site")
+print(p)
+
+p <- ggplot(ppd_df, aes(x, y, fill=l)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Intensity per site")
+print(p)
+p <- ggplot(ppd_df, aes(x, y, fill=b)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Bias per site")
+print(p)
+```
+
+
+## Correlation between coefficients in Thinned poisson process model for presence-only data.
+In the above plots, we can notice that the bias and (unthinned) intensity are behaving strangely. Here we observe the effect of correlated parameters describing the behavior of the intensity and the bias the NHPP. We examine the distributions of the generated quantities using the fitted model.
+
+The issue with the large values is both because we are taking the mean of the posterior distribution as our point estimate, and the high correlation between the two parameters causes the estimates to inversely fluctuate around each other.
+```{r generated-params-pp, eval=eval_pp}
+plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
+p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[1]) + plot_title
+print(p_post)
+p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[2]) + plot_title
+print(p_post)
+p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[3]) + plot_title
+print(p_post)
+# Look at counts for each site
+gen_y <- c("y_rep[1]", "y_rep[10]", "y_rep[20]")
+p_post <- mcmc_hist(posterior, pars=)
+print(p_post)
+
+# The gen parameters for just a few of the sites
+gen_lambda <- c('lambda_rep[1]', 'lambda_rep[10]', 'lambda_rep[20]')
+gen_lb <- c('lambda_bias[1]', 'lambda_bias[10]', 'lambda_bias[20]')
+gen_b <- c('b_rep[1]', 'b_rep[10]', 'b_rep[20]')
+p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", pars = gen_lambda) + plot_title
+print(p_post)
+p_post <- mcmc_hist(posterior, pars = gen_lambda) 
+print(p_post)
+p_post <- mcmc_hist(posterior, pars = gen_b)
+print(p_post)
+
+p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", pars = ) + plot_title
+print(p_post)
+
+
+
+```
+The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates  for b*l since this is draw specific (where when one is high the other is low), but  the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of $\lambda$ and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I'd like to check a specific example of, for one draw.
+
+```{r convergence-diagnostics, eval=eval_pp}
+# Nuts diagnostics that I haven't tried to understand really
+nuts_fit <- nuts_params(fit)
+head(nuts_fit)
+mcmc_nuts_treedepth(nuts_fit, log_posterior(fit))
+mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))
+mcmc_parcoord(fit$draws(), np=nuts_fit)
+mcmc_violin(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta'))
+mcmc_nuts_divergence(nuts_fit, log_posterior(fit))
+mcmc_nuts_energy(nuts_fit, binwidth=1/2)
+mcmc_rhat(rhat(fit))
+mcmc_neff(neff_ratio(fit))
+mcmc_acf(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
+
+# CMDSTAN functions for checking
+fit$cmdstan_diagnose()
+fit$cmdstan_summary()
+#loo_results <- fit$loo(variables="lp__", cores=4)
+#TODO: UHOH, why nan and what dis mean.
+#print(loo_results)
+```
+
+We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as
+$$
+\lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
+$$
+we now add a Gaussian process
+$$
+\lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]
+$$
+so that the expected value for quadrat $A$ will be the integral over the quadrat:
+$$
+\Delta(A) = \int_A\lambda(s)ds = \int_A \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]ds
+$$
+We make the same approximations as before based on our limited covariate resolution.
+```{r stan-fit-lgcp, eval=eval_lgcp}
+model_string <- log_gaussian_cox_process
+write(model_string, model_path)
+# Here we need to use the distance matrix
+data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
+model <- cmdstan_model(model_path)
+lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=10000, iter_warmup=1000, thin = 10)
+```
+
+```{r model-summary-lgcp, eval=eval_lgcp}
+lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
+```
+
+```{r posterior-diagnostics-lgcp, eval=eval_lgcp}
+posterior <- lgcp_fit$draws()
+color_scheme_set("mix-blue-pink")
+p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
+                      facet_args = list(nrow = 2, labeller = label_parsed))
+print(p_trace + facet_text(size = 15))
+
+plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
+p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("alpha", "beta")) + plot_title
+print(p_post)
+
+plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
+p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("gamma", "delta")) + plot_title
+print(p_post)
+
+mcmc_intervals(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
+#mcmc_hist(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta')) 
+plot_title <- ggtitle("Parameter posterior sample correlation")
+p_post <- mcmc_pairs(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
+print(p_post)
+mcmc_scatter(posterior, pars=c('alpha','gamma'))
+```
+```{r ppd-data-lgcp, eval=eval_lgcp}
+generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
+lambda_thinned <- lgcp_fit$summary(variables=generated_vars[1])$mean
+lambda_rep <- lgcp_fit$summary(variables=generated_vars[2])$mean
+bias_rep <- lgcp_fit$summary(variables=generated_vars[3])$mean
+y_ppd <- lgcp_fit$summary(variables=generated_vars[4])$mean
+ppd_df <- data.frame(x=grid_points$x, y=grid_points$y, y_rep=y_ppd, lt=lambda_thinned, l=lambda_rep, b=bias_rep)
+head(ppd_df)
+```
+We can then check the generated data:
+```{r ppd-plots-lgcp, eval=eval_lgcp}
+p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("PPD counts per site")
+print(p)
+
+p <- ggplot(ppd_df, aes(x, y, fill=lt)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Thinned intensity per site")
+print(p)
+
+p <- ggplot(ppd_df, aes(x, y, fill=l)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Intensity per site")
+print(p)
+p <- ggplot(ppd_df, aes(x, y, fill=b)) + 
+    geom_tile() +
+    scale_fill_viridis(discrete=FALSE) +
+    ggtitle("Bias per site")
+print(p)
+```
