@@ -1,0 +1,22 @@
+project:
+  type: book
+
+book:
+  title: "Thinned Nonhomogenous Poisson Processes for Presence-Only data"
+  author: "Max Savery"
+  date: "28/06/2023"
+  chapters:
+    - index.qmd
+    - src/introduction.qmd
+    - src/poisson-processes_presence-only.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreport
+
+execute:
+  freeze: auto

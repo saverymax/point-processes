@@ -1,0 +1,5 @@
+# Introduction
+
+In this document we discuss models for presence-only data, using Thinned Nonhomogenous Poisson Processes and Log Gaussian Cox Processes. The initial planned layout is as follows: Introduce Poisson Process models and the data generating process. Then, proceed to fit a Thinned Nonhomogenous Poisson Process in Stan (and in spatstat), on simulated presence-only data. 
+
+The rest of this document implements the above description, including theory where necessary.
