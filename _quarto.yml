@@ -1,5 +1,5 @@
 project:
-  type: book
+  type: website
 
 book:
   title: "Thinned Nonhomogenous Poisson Processes for Presence-Only data"
@@ -21,4 +21,4 @@ format:
     documentclass: scrreport
 
 execute:
-  freeze: true
+  freeze: auto
