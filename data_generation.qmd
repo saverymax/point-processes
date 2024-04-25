@@ -19,9 +19,9 @@ $$
 $$ 
 In the homogenous case, we can simulate $n$ observations from 
 $$
-N(D) \sim Poisson(\lambda|D|)$ ($\lambda(s)=\lambda,
+N(D) \sim Poisson(\lambda|D|), 
 $$
-and is thus constant over $D$), and then according to the $n$, distribute these uniformly over $D$. In the case of the Nonhomogenous Poisson Process, we can do the same, drawing $n$ now from $N(D) \sim Poisson(\lambda(D)) = Poisson(\int_D\lambda(s)ds)$, and then distributing their locations over $D$. Instead of uniformly distributing them however, they are placed according to the distribution $\frac{\lambda(s)}{\lambda(D)}$. There are two issues here, both relating to the evaluation of the integral for the expected number of observations.
+($\lambda(s)=\lambda$, and is thus constant over $D$), and then according to the $n$, distribute these uniformly over $D$. In the case of the Nonhomogenous Poisson Process, we can do the same, drawing $n$ now from $N(D) \sim Poisson(\lambda(D)) = Poisson(\int_D\lambda(s)ds)$, and then distributing their locations over $D$. Instead of uniformly distributing them however, they are placed according to the distribution $\frac{\lambda(s)}{\lambda(D)}$. There are two issues here, both relating to the evaluation of the integral for the expected number of observations.
 
 Remember that we are using as intensity 
 $$
