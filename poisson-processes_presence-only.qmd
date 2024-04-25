@@ -17,31 +17,12 @@ eval_pp <- T
 eval_lgcp <- F
 simple_surface <- T
 ```
-## Presence-only data generation
+## Implementation
 
-Having introduced some theory for Poisson Point Process models, we next move on to data simulation. Here we simulate some presence-only data, in preparation to fit a nonhomogenous poisson process model. We specify the intensity for each site, the total number of individuals, the area of each site (assumed to be 1 here), and the sampling bias.
+The previous sections discussed the theoretical and practical aspects of data generation. We now proceed to implement the data generation procedure. We first generate observations at each site and create plots of observed intensities, bias, and counts. We then fit a Poisson Point Process to the generated data.
 
-Following Fithian 2015, each observation $i$ is associated with a site $s_i$ \in area $D$. For each site $s_i$, there are associated covariates $x_i = x(s_i)$ and $z_i = z(s_i)$. For each survey site, $s_i$ represents the centroid of a quadrat Ai. This is an essential assumption in our model, where we will use the Poisson likelihood to for the number of counts in each quadrat. At $s_i$ we observe counts $N_{i} = N_{}(A_i)$ or binary presence/absence indicators
-$y_{i}$, with $y_{i} = 1$ if $N_i > 0$ and $y_i = 0$ otherwise.
-
-One issue in generating the data is that in using a poisson model to simulate the counts for each site, we lose individual point information in aggregating the points to counts per quadrat. However, this issue of aggregation is unavoidable, because we are using covariates that correspond to each cell. This is an important point. The assumptions we make about the grid will actually effect the way we simulate data. For example, when the only covariate data we have is that which is associated with the quadrat we are working with, then to simulate the data, each point realization will be created in aggregate, that is, a draw from a poisson distribution characterized by an functional of intensity dependent only on the covariates. 
-
-If our covariates exist on a finer scale than the quadrat, we can simulate the point locations more finely as well, and take a simulation approach outlined on page 2020 of Banerjee 2014 and followed by Koshkina, 2017. In this approach, we simulate first the total number of observations, create a homogenous poisson process, and then thin the process at the level of the grid of covariates we are working with. It doesn't completely make sense to simulate PPP data in this way here, because our covariates only exist at the level of the aggregated quadrat. That is, we assume that the intensity is constant across our region $A$, because according to our true data generating process, it is. This is also convenient for the approximation we are using.
-
-We must also take into account the bias associated with the observation of species with true intensity $\lambda(s)$. In order to account for the bias caused by collecting presence-only observations, the poisson process is thinned by the sampling bias $b$. For more information about thinning a poisson process, see https://math.stackexchange.com/questions/580883/thinning-a-poisson-process.
-$$
-\lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
-$$
-The question of the data generating process under our modelling assumptions is an interesting one. Referencing our initial theoretical outline, we need to simulate points with likelihood $\prod_i\lambda(s_i)\frac{\exp(-\lambda(D))}{n!}$. In the homogenous case, we can simulate $n$ observations from $N(D) \sim Poisson(\lambda|D|)$ ($\lambda(s)=\lambda$ and is thus constant over $D$), and then according to the $n$, distribute these uniformly over $D$. In the case of the Nonhomogenous Poisson Process, we can do the same, drawing $n$ now from $N(D) \sim Poisson(\lambda(D)) = Poisson(\int_D\lambda(s)ds)$, and then distributing their locations over $D$. Instead of uniformly distributing them however, they are placed according to the distribution $\frac{\lambda(s)}{\lambda(D)}$. There are two issues here, both relating to the evaluation of the integral for the expected number of observations.
-
-Remember that we are using as intensity $\lambda(A_i) = \int_A\lambda(s)ds = \int_A\exp[\alpha + \beta'x(s)]ds = \exp[\alpha + \beta'x_i]$, because we only have information $X_i$ for quadrat $A_i$ centered around $s_i$. While we are doing simulations, we could arbitrarily create a finer covariate grid but we won't have access to this during the modelling process. Using the $x_i$ we have, both $\lambda(A)$ and $\lambda(D)$ will be approximations at the covariate resolution, using the assumption that each $x_i$ is constant over $A_i$. This being the case, then for each observation, we will use the same distribution as the other points that fall into the same $A_i$. That is, multiple points will have the same distribution $\frac{\exp[\alpha + \beta'x_i]}{\sum_i \exp[\alpha + \beta'x_i]}$. This goes somewhat against the idea of distributing the points in continuous space. Therefore, given the independence of each $A_i$ conditional on the covariates, another approach is to generate counts for each $A_i$ and then uniformly distribute them within each $A_i$. If $x_i$ is constant across $A_i$, this is ok. However, if we cannot assume this, using the continuous probability distribution for each point $(\lambda(s)/\lambda(D))$ is necessary to avoid the integral of $\lambda(A)$. We can do so in a way that avoids computing $\lambda(D)$ as well (Banerjee, 2014. p220), by computing $\lambda_{max}$, simulating $n$ from $N(D) \sim Poisson(\lambda_{max}|D|)$, and the rejecting some of these points by $\lambda(s_i)/\lambda_{max}$. In this way, the only thing we need is information at the level of $\lambda(s_i$) and avoid $\lambda(D)$ and $\lambda(A)$. 
-
-So note that we take the route of simulation depending on our available information. If we only have $x_i$ for each quadrat, directly generating the points as a poisson random variable is a good option because it avoids any complicated integrals. But if we have finer covariates than at the quadrat level we are working with, then thinning the process down with the approach of Banerjee and others is better because it also avoids the integrals and has finer resolution.
-
-There are a few things to during the data gerating process with the NHPP. The area of the total space, $|D|$, the area of each site (quadrat) $|A_i|$, and the number of cells $c$ that $D$ is discretized into. The area of $A$ depends on the number of discretizations (or cells): $|A_i| = |D|/c$. The intensity will be scaled by this factor $|D|/c$, so that as the area of $|A|$ becomes smaller, the intensity converges to that of a "true" continuous poisson process with its center at $A_i$. We also assume that the intensity is constant over $A$, so that we can indeed scale the intensity by the area factor, instead of needing to integrate over $A$. This assumption is in contrast to assuming that we model the instensity directly as $\Lambda(A_i) = \exp(\beta'X)$ (versus $\Lambda(A_i) = \frac{|D|}{c}\exp(\beta'X)$). 
-
-Thi following code generates observations at each site and plots observed intensities, bias, and counts.
-```{r data generation}
+We create a ring-shaped environment based on two correlated covariates and generate PO points accordingly.
+```
 area_D <- 100
 k <- 20
 sites <- k^2
@@ -51,44 +32,6 @@ beta <- 2
 gamma <- -2
 delta <- 0.5
 params <- list(alpha=alpha, beta=beta, gamma=gamma, delta=delta)
-# Plot all intensity functions
-grid_points <- get_sampling_surface_simple(k)
-distance_mat <- as.matrix(dist(grid_points[,1:2]))
-data_reps <- 1
-corr_matrix <- specify_corr(grid_points[,1:2])
-gp_bool <- F
-sim_data <- generate_ppp_data_r(grid_points, params, sites, data_reps, corr_matrix, gp_bool, area_D)
-Y_positive_indices <- which(sim_data$Y>0)
-# Check that total counts equal number of coordinates
-stopifnot(sum(sim_data$Y[Y_positive_indices]) == nrow(sim_data$coordinates))
-# This is the data and coordinates at which there are counts > 0
-sim_data$Y[Y_positive_indices]
-sim_data$Y_coords
-grid_points[Y_positive_indices,]
-# Use the final generation iteration
-p <- ggplot(grid_points, aes(x, y, fill=sim_data$lambda[data_reps,])) + 
-  geom_tile() +
-  scale_fill_viridis(discrete=FALSE) +
-  ggtitle("Generated intensity per site")
-print(p)
-
-p <- ggplot(grid_points, aes(x, y, fill=sim_data$bias[data_reps,])) + 
-  geom_tile() +
-  scale_fill_viridis(discrete=FALSE) +
-  ggtitle("Generated bias per site")
-print(p)
-
-thinned_intensity <- sim_data$lambda[data_reps,]*sim_data$bias[data_reps,]
-p <- ggplot() +
-  geom_tile(grid_points, mapping=aes(x, y, fill=thinned_intensity, width=1, height=1), alpha=.6) + 
-  scale_fill_viridis(discrete=FALSE, name="L*b") +
-  ggtitle("Generated thinning per site, including generated (or observed) individuals") +
-  geom_point(data=sim_data$Y_coords, mapping=aes(x=x, y=y), size=3, col="white") +
-  theme(panel.grid.minor = element_line(colour="white")) +
-  scale_y_continuous(breaks = seq(0, 20, 1)) +
-  scale_x_continuous(breaks = seq(0, 20, 1)) 
-print(p)
-# Then use the donut intensity with correlated bias
 aux_cor <- 0.7
 grid_points <- get_sampling_surface_donut(k)
 grid_points <- get_bias_surface_correlated(grid_points, aux_cor)
@@ -131,6 +74,7 @@ p <- ggplot() +
   scale_x_continuous(breaks = seq(0, 20, 1)) 
 print(p)
 ```
+The above plots show the PO points and the more complicated ring-shaped surface.
 
 ```{r stan-model, include=FALSE}
 source("stan_models/stan_thinned_poisson_process.R")

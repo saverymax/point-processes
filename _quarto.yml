@@ -9,6 +9,7 @@ book:
     - index.qmd
     - introduction.qmd
     - theory.qmd
+    - data_generation.qmd
     - poisson-processes_presence-only.qmd
 
 bibliography: references.bib
