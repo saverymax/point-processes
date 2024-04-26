@@ -14,7 +14,6 @@ source("presence_only_functions.R")
 source("surface_functions.R")
 eval_pp <- T
 eval_lgcp <- F
-simple_surface <- T
 ```
 ## Implementation
 
@@ -46,9 +45,11 @@ gp_bool <- F
 sim_data <- generate_ppp_data_r(grid_points, params, sites, data_reps, corr_matrix, gp_bool, area_D)
 Y_positive_indices <- which(sim_data$Y>0)
 stopifnot(sum(sim_data$Y[Y_positive_indices]) == nrow(sim_data$coordinates))
-sim_data$Y[Y_positive_indices]
 sim_data$Y_coords
 grid_points[Y_positive_indices,]
+```
+The above output shows the exact location of the generated points and the associated $x$ and $z$ covariate values.
+```{r plot-points}
 # Use the final generation iteration
 p <- ggplot(grid_points, aes(x, y, fill=sim_data$lambda[data_reps,])) + 
   geom_tile() +
@@ -90,20 +91,21 @@ write(model_string, model_path)
 # data_reps is 1 here so just use the first index
 data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,])
 model <- cmdstan_model(model_path)
-fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=10000, iter_warmup=1000, thin = 10)
+fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_warmup=200)
 ```
-
+The above code fits the table. We next examine the fit.
 ```{r model-summary-pp, eval=eval_pp}
 fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
-From the table above, we can observe that the parameters $\beta$ and $\delta$ have been recovered. However, due to the correlation of $\alpha$ and $\gamma$, only the sum $\alpha+\gamma$ can be correctly identified. Our "true" sum of was equal to -6, and we can see the estimate here is -5.5, an estimate which also incorporates prior information. The correlation between the two can be observed in the scatter plots below, as well as in the wide Confidence Interval of the posterior, relative to the other parameters.
+From the table above, we can observe that the parameters $\beta$ and $\delta$ have been recovered. However, due to the correlation of $\alpha$ and $\gamma$, only the sum $\alpha+\gamma$ can be correctly identified. Our "true" sum of was equal to -4, and we can see the estimate here is $~4.7$, which is reasonable given we incorporate priors and are estimating correlated parameters. The correlation between the two can be observed in the scatter plots below, as well as in the wide confidence interval of the posterior, relative to the other parameters.
 
 ## Diagnostics
 
 Here we check goodness of fit and Posterior Predictive Checks.
 
 ```{r posterior-diagnostics-pp, eval=eval_pp}
-posterior <- fit$draws()
+param_vec <- c('alpha', 'gamma', 'beta', 'delta')
+posterior <- fit$draws(variables=param_vec)
 color_scheme_set("mix-blue-pink")
 p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
                       facet_args = list(nrow = 2, labeller = label_parsed))
@@ -116,16 +118,17 @@ print(p_post)
 plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
 p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("gamma", "delta")) + plot_title
 print(p_post)
-
-
-mcmc_intervals(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
-#mcmc_hist(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta')) 
-plot_title <- ggtitle("Parameter posterior sample correlation")
-p_post <- mcmc_pairs(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
-print(p_post)
-mcmc_scatter(fit$draws(), pars=c('alpha','gamma'))
+mcmc_intervals(posterior)
 ```
-We can note the wide intervals on $\alpha$ and $\gamma$. Additionally the scatter plot shows the independence of $\beta$ and $\delta$ with the other parameters, as well as the correlation between $\alpha$ and $\gamma$.
+Importantly, note the wide credible intervals on $\alpha$ and $\gamma$. Why? See the scatter plots below.
+
+```{r param-corr, eval=eval_pp}
+plot_title <- ggtitle("Parameter posterior sample correlation")
+p_post <- mcmc_pairs(posterior)
+print(p_post)
+mcmc_scatter(posterior, pars=c('alpha','gamma'))
+```
+There is near perfect correlation between $\alpha$ and $\gamma$, as expected.
 
 ## PPD
 
@@ -179,47 +182,48 @@ p <- ggplot(ppd_df, aes(x, y, fill=b)) +
     ggtitle("Bias per site")
 print(p)
 ```
+The prediction of PO observatiosn at each site is realistic, as is the thinned intensity. But alone, the intensity and bias predictive disitributions are poorly estimated.
 
 
 ## Correlation between coefficients in Thinned poisson process model for presence-only data.
+EDIT FROM HERE: want to say something slightly different.
 In the above plots, we can notice that the bias and (unthinned) intensity are behaving strangely. Here we observe the effect of correlated parameters describing the behavior of the intensity and the bias the NHPP. We examine the distributions of the generated quantities using the fitted model.
 
 The issue with the large values is both because we are taking the mean of the posterior distribution as our point estimate, and the high correlation between the two parameters causes the estimates to inversely fluctuate around each other.
 ```{r generated-params-pp, eval=eval_pp}
 plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
-p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[1]) + plot_title
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[1]) + plot_title
 print(p_post)
-p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[2]) + plot_title
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[2]) + plot_title
 print(p_post)
-p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", regex_pars = generated_vars[3]) + plot_title
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[3]) + plot_title
 print(p_post)
 # Look at counts for each site
 gen_y <- c("y_rep[1]", "y_rep[10]", "y_rep[20]")
-p_post <- mcmc_hist(posterior, pars=)
+p_post <- mcmc_hist(fit$draws(), pars=gen_y)
 print(p_post)
 
 # The gen parameters for just a few of the sites
 gen_lambda <- c('lambda_rep[1]', 'lambda_rep[10]', 'lambda_rep[20]')
 gen_lb <- c('lambda_bias[1]', 'lambda_bias[10]', 'lambda_bias[20]')
 gen_b <- c('b_rep[1]', 'b_rep[10]', 'b_rep[20]')
-p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", pars = gen_lambda) + plot_title
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_lambda) + plot_title
 print(p_post)
-p_post <- mcmc_hist(posterior, pars = gen_lambda) 
+p_post <- mcmc_hist(fit$draws(), pars = gen_lambda) 
 print(p_post)
-p_post <- mcmc_hist(posterior, pars = gen_b)
+p_post <- mcmc_hist(fit$draws(), pars = gen_b)
 print(p_post)
-
-p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", pars = ) + plot_title
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_lb) + plot_title
 print(p_post)
 ```
 The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates  for b*l since this is draw specific (where when one is high the other is low), but  the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of $\lambda$ and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I'd like to check a specific example of, for one draw.
 
-```{r convergence-diagnostics, eval=eval_pp}
+```{r convergence-diagnostics, eval=FALSE}
 # Nuts diagnostics that I haven't tried to understand really
 nuts_fit <- nuts_params(fit)
 head(nuts_fit)
 mcmc_nuts_treedepth(nuts_fit, log_posterior(fit))
-mcmc_nuts_acceptnce(nuts_fit,  log_posterior(fit))
+mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))
 mcmc_parcoord(fit$  draws(), np=nuts_fit)
 mcmc_violin(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta'))
 mcmc_nuts_divergence(nuts_fit, log_posterior(fit))
@@ -263,13 +267,14 @@ write(model_string, model_path)
 # Here we need to use the distance matrix
 data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
 model <- cmdstan_model(model_path)
-lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=10000, iter_warmup=1000, thin = 10)
+lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_warmup=200, thin = 10)
 ```
 
+Having fit the LGCP we can examine the parameters.
 ```{r model-summary-lgcp, eval=eval_lgcp}
 lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
-
+And then we look at the posterior diagnostics.
 ```{r posterior-diagnostics-lgcp, eval=eval_lgcp}
 posterior <- lgcp_fit$draws()
 color_scheme_set("mix-blue-pink")
@@ -292,6 +297,7 @@ p_post <- mcmc_pairs(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 print(p_post)
 mcmc_scatter(posterior, pars=c('alpha','gamma'))
 ```
+Finally look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
 ```{r ppd-data-lgcp, eval=eval_lgcp}
 generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
 lambda_thinned <- lgcp_fit$summary(variables=generated_vars[1])$mean
@@ -326,3 +332,4 @@ p <- ggplot(ppd_df, aes(x, y, fill=b)) +
     ggtitle("Bias per site")
 print(p)
 ```
+
