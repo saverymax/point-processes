@@ -21,4 +21,4 @@ format:
     documentclass: scrreport
 
 execute:
-  freeze: auto
+  freeze: true

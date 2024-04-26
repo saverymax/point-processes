@@ -1,4 +1,3 @@
-
 # Data generation and Modelling
 
 ```{r set-up,  message=FALSE}
@@ -101,7 +100,7 @@ From the table above, we can observe that the parameters $\beta$ and $\delta$ ha
 
 ## Diagnostics
 
-Here we check goodness of fit and PPCs. We also discuss some advantages and disadvantages of PPCs. One thing I'm still interested in is goodness of fit and PPCs for species distribution models?
+Here we check goodness of fit and Posterior Predictive Checks.
 
 ```{r posterior-diagnostics-pp, eval=eval_pp}
 posterior <- fit$draws()
@@ -212,9 +211,6 @@ print(p_post)
 
 p_post <- mcmc_intervals(posterior,  prob = 0.9, point_est="mean", pars = ) + plot_title
 print(p_post)
-
-
-
 ```
 The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates  for b*l since this is draw specific (where when one is high the other is low), but  the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of $\lambda$ and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I'd like to check a specific example of, for one draw.
 
@@ -223,28 +219,32 @@ The take away is that the mean for the generated quantities is very skewed by th
 nuts_fit <- nuts_params(fit)
 head(nuts_fit)
 mcmc_nuts_treedepth(nuts_fit, log_posterior(fit))
-mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))
-mcmc_parcoord(fit$draws(), np=nuts_fit)
+mcmc_nuts_acceptnce(nuts_fit,  log_posterior(fit))
+mcmc_parcoord(fit$  draws(), np=nuts_fit)
 mcmc_violin(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta'))
 mcmc_nuts_divergence(nuts_fit, log_posterior(fit))
 mcmc_nuts_energy(nuts_fit, binwidth=1/2)
 mcmc_rhat(rhat(fit))
 mcmc_neff(neff_ratio(fit))
-mcmc_acf(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
 
-# CMDSTAN functions for checking
+```{r acf, eval=eval_pp}
+mcmc_acf(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
+```
+Autocorrelation in the chains looks well-handled.
+
+```{r final-check, eval=eval_pp}
 fit$cmdstan_diagnose()
-fit$cmdstan_summary()
+# Leave loo out.
 #loo_results <- fit$loo(variables="lp__", cores=4)
-#TODO: UHOH, why nan and what dis mean.
 #print(loo_results)
 ```
+It appears we have no additional problems in the models according the the Stan diagnostics.
 
 We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as
 $$
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
 $$
-we now add a Gaussian process
+we now add a Gaussian process to incorporate spatial correlation between sites
 $$
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]
 $$
@@ -252,7 +252,11 @@ so that the expected value for quadrat $A$ will be the integral over the quadrat
 $$
 \Delta(A) = \int_A\lambda(s)ds = \int_A \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]ds
 $$
-We make the same approximations as before based on our limited covariate resolution.
+We make the same approximations as before based on our limited covariate resolution. 
+
+While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive and not practical if we will want to apply the LGCP to developing optimal designs.
+
+I proceed with the stan code.
 ```{r stan-fit-lgcp, eval=eval_lgcp}
 model_string <- log_gaussian_cox_process
 write(model_string, model_path)
