@@ -1,5 +1,5 @@
 # Introduction
 
-In this document we discuss models for presence-only data, using Thinned Nonhomogenous Poisson Processes and Log Gaussian Cox Processes. The initial planned layout is as follows: Introduce presence-only data, Poisson Process models and the data generating process. Then, proceed to fit a Thinned Nonhomogenous Poisson Process in Stan (and in spatstat), on simulated presence-only data. Later blog posts will discuss the relationship between PO and PA data and their intertwined data generation.
+In this document we discuss models for presence-only data, namely the Thinned Nonhomogenous Poisson Processes (NHPP) and Log Gaussian Cox Processes (LGCP). The initial planned layout is as follows: Introduce presence-only data, Poisson Process models and the data generating process. Then, proceed to fit a Thinned Nonhomogenous Poisson Process in Stan (and in spatstat), on simulated presence-only data. Later blog posts will discuss the relationship between PO and PA data and their intertwined data generation.
 
 The rest of this document follows the above description, including theory where necessary.
