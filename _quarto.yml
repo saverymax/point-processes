@@ -1,5 +1,5 @@
 project:
-  type: website
+  type: book
 
 book:
   title: "Thinned Nonhomogenous Poisson Processes for Presence-Only data"
