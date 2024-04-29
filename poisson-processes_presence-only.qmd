@@ -115,7 +115,7 @@ Here we check goodness of fit and Posterior Predictive Checks.
 
 ```{r}
 #| label: diag-check
-#! eval: true
+#| eval: true
 param_vec <- c('alpha', 'gamma', 'beta', 'delta')
 posterior <- fit$draws(variables=param_vec)
 color_scheme_set("mix-blue-pink")
