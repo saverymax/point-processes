@@ -1,6 +1,6 @@
 # Data generation and Modelling
 
-```{r set-up,  message=FALSE}
+```{r set-up,  output=FALSE}
 library(ggplot2)
 library(viridis)
 library(hrbrthemes)
@@ -85,7 +85,7 @@ $$L(\lambda|Y) = \prod^{N}_{i=1}\frac{\lambda_i^{n_i}\exp[-\lambda_i]}{n_i!}$$. 
 
 The next sections of code fitting and diagnosing the poisson process model in Stan, using the generated data.
 
-```{r stan-fit-pp, results='hide', messages=FALSE,cache=FALSE, eval=eval_pp}
+```{r stan-fit-pp, output=FALSE, eval=eval_pp}
 model_string <- stan_poisson_process
 write(model_string, model_path)
 # data_reps is 1 here so just use the first index
