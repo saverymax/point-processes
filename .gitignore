@@ -1,8 +1,5 @@
 .Rproj.user
 .Rhistory
-*.png
-*.pdf
-src/poisson-processes_presence-only_files/*
 *.exe
 *.stan
 
