@@ -20,6 +20,13 @@ jobs:
         with:
           tinytex: true
 
+      - name: Add r
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages:
+            any::knitr
+            any::rmarkdown
+
       - name: Render Book
         uses: quarto-dev/quarto-actions/publish@v2
         with:
