@@ -15,8 +15,6 @@ library(tidyr)
 
 source("presence_only_functions.R")
 source("surface_functions.R")
-eval_pp <- true
-eval_lgcp <- false
 ```
 ## Implementation
 
@@ -95,7 +93,7 @@ The next sections of code fitting and diagnosing the poisson process model in St
 ```{r}
 #| label: fit-pp
 #| output: FALSE
-#| eval: eval_pp
+#| eval: true
 model_string <- stan_poisson_process
 write(model_string, model_path)
 # data_reps is 1 here so just use the first index
@@ -106,7 +104,7 @@ fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_warmu
 The above code fits the table. We next examine the fit.
 ```{r}
 #| label: view-fit
-#| eval: eval_pp
+#| eval: true
 fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
 From the table above, we can observe that the parameters $\beta$ and $\delta$ have been recovered. However, due to the correlation of $\alpha$ and $\gamma$, only the sum $\alpha+\gamma$ can be correctly identified. Our "true" sum of was equal to -4, and we can see the estimate here is $~4.7$, which is reasonable given we incorporate priors and are estimating correlated parameters. The correlation between the two can be observed in the scatter plots below, as well as in the wide confidence interval of the posterior, relative to the other parameters.
@@ -117,7 +115,7 @@ Here we check goodness of fit and Posterior Predictive Checks.
 
 ```{r}
 #| label: diag-check
-#! eval: eval_pp
+#! eval: true
 param_vec <- c('alpha', 'gamma', 'beta', 'delta')
 posterior <- fit$draws(variables=param_vec)
 color_scheme_set("mix-blue-pink")
@@ -138,7 +136,7 @@ Importantly, note the wide credible intervals on $\alpha$ and $\gamma$. Why? See
 
 ```{r}
 #| label: posterior-pp
-#| eval: eval_pp
+#| eval: true
 plot_title <- ggtitle("Parameter posterior sample correlation")
 p_post <- mcmc_pairs(posterior)
 print(p_post)
@@ -161,7 +159,7 @@ Below we plot the generated values of $\tilde{y}$ for each site. Additionally, t
 
 ```{r}
 #| label: ppd-check
-#| eval: eval_pp
+#| eval: true
 generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
 lambda_thinned <- fit$summary(variables=generated_vars[1])$mean
 lambda_rep <- fit$summary(variables=generated_vars[2])$mean
@@ -178,7 +176,7 @@ $$\lambda^* = \exp\left[\alpha + \beta*X(s) + \gamma + \delta*Z(s)\right]$$
 We can then see the generated data in the sampling surface:
 ```{r}
 #| label: viz-gen
-#| eval: eval_pp
+#| eval: true
 p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
     geom_tile() +
     scale_fill_viridis(discrete=FALSE) +
@@ -212,7 +210,7 @@ In the above plots, we can notice that the bias and (unthinned) intensity are be
 The issue with the large values is both because we are taking the mean of the posterior distribution as our point estimate, and the high correlation between the two parameters causes the estimates to inversely fluctuate around each other.
 ```{r}
 #| label: pp-correlation
-#| eval: eval_pp
+#| eval: true
 plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
 p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[1]) + plot_title
 print(p_post)
@@ -242,7 +240,7 @@ The take away is that the mean for the generated quantities is very skewed by th
 
 ```{r}
 #| label: nuts-diag
-#| eval: eval_pp
+#| eval: true
 # Nuts diagnostics that I haven't tried to understand really
 nuts_fit <- nuts_params(fit)
 head(nuts_fit)
@@ -257,14 +255,14 @@ mcmc_neff(neff_ratio(fit))
 
 ```{r}
 #| label: auto-corr
-#| eval: eval_pp
+#| eval: true
 mcmc_acf(fit$draws(), pars=c('alpha', 'beta', 'gamma', 'delta'))
 ```
 Autocorrelation in the chains looks well-handled.
 
 ```{r}
 #| label: loo
-#| eval: eval_pp
+#| eval: true
 fit$cmdstan_diagnose()
 # Leave loo out.
 #loo_results <- fit$loo(variables="lp__", cores=4)
@@ -291,7 +289,7 @@ While the topic of LGCPs on its own is quite interesting and deserves its own tr
 I proceed with the stan code.
 ```{r}
 #| label: lgcp-fit
-#| eval: eval_lgcp
+#| eval: false
 model_string <- log_gaussian_cox_process
 write(model_string, model_path)
 # Here we need to use the distance matrix
@@ -303,13 +301,13 @@ lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_
 Having fit the LGCP we can examine the parameters.
 ```{r)
 #| label: lgcp-params
-#| eval: eval_lgcp
+#| eval: false
 lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
 And then we look at the posterior diagnostics.
 ```{r}
 #| label: lgcp-post 
-#| eval: eval_lgcp
+#| eval: false
 posterior <- lgcp_fit$draws()
 color_scheme_set("mix-blue-pink")
 p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
@@ -334,7 +332,7 @@ mcmc_scatter(posterior, pars=c('alpha','gamma'))
 Finally look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
 ```{r}
 #| label: ppd-lgcp
-#| eval: eval_lgcp
+#| eval: false
 generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
 lambda_thinned <- lgcp_fit$summary(variables=generated_vars[1])$mean
 lambda_rep <- lgcp_fit$summary(variables=generated_vars[2])$mean
@@ -346,7 +344,7 @@ head(ppd_df)
 We can then check the generated data:
 ```{r}
 #| label: lgcp-gen
-#| eval: eval_lgcp
+#| eval: false
 p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
     geom_tile() +
     scale_fill_viridis(discrete=FALSE) +
