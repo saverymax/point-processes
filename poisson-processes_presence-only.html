@@ -277,8 +277,8 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Correlation between X and Z"
           [,1]      [,2]
-[1,] 1.0000000 0.8251339
-[2,] 0.8251339 1.0000000</code></pre>
+[1,] 1.0000000 0.7922568
+[2,] 0.7922568 1.0000000</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -301,47 +301,34 @@ window.Quarto = {
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">sum</span>(sim_data<span class="sc">$</span>Y[Y_positive_indices]) <span class="sc">==</span> <span class="fu">nrow</span>(sim_data<span class="sc">$</span>coordinates))</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sim_data<span class="sc">$</span>Y_coords</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           x        y
-1   7.604587 2.987391
-2   8.208292 2.798316
-3   9.199932 3.081494
-4  10.134502 2.534921
-5  10.444079 2.895458
-6  10.491106 2.792123
-7  10.143301 2.876612
-8   9.980972 3.466333
-9   9.681933 3.204667
-10 10.086418 2.635699
-11  5.857106 3.988620
-12  7.908291 4.375673
-13  5.214589 4.798995
-14  5.228417 4.935378
-15  4.650937 5.217280
-16  4.103345 6.245902
-17  4.777866 5.517239
-18  4.456848 6.659760
-19  2.696183 8.573379
-20  2.607926 9.033843
-21  2.668988 8.712877
-22  2.604806 8.683582
-23  2.873329 9.217347
-24  2.877806 8.965481
-25  2.601834 9.755149</code></pre>
+<pre><code>           x         y
+1   7.202553  3.220518
+2   7.675084  3.286613
+3   8.864841  3.216643
+4  10.397914  2.978082
+5  10.422675  3.224370
+6   9.723405  3.018023
+7   7.581050  3.596772
+8   4.973324  5.058219
+9   5.365152  4.509174
+10  4.043212  6.214004
+11  3.483803  7.787857
+12  3.009387 10.485623
+13  2.804286 10.122702
+14  3.073252  9.707147</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grid_points[Y_positive_indices,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    x  y     aux_x      aux_z
-28  8  3 1.7474542  1.4221010
-29  9  3 2.2578390 -0.5533476
-30 10  3 2.3263479  1.7730404
-36  6  4 1.9218166  0.6870115
-38  8  4 0.9405371  1.5736839
-45  5  5 2.2578390  2.0437678
-54  4  6 1.9218166  1.9537245
-55  5  6 1.0796015  1.0853407
-64  4  7 1.7189159  1.2974546
-83  3  9 2.2578390  2.6021045
-93  3 10 2.3263479  1.7697979</code></pre>
+<pre><code>    x  y     aux_x     aux_z
+27  7  3 1.0454213 0.5587944
+28  8  3 1.7474542 1.0129738
+29  9  3 2.2578390 0.9530822
+30 10  3 2.3263479 1.8272521
+38  8  4 0.9405371 0.8262318
+45  5  5 2.2578390 2.4000905
+54  4  6 1.9218166 2.1620968
+73  3  8 1.7474542 0.7530414
+93  3 10 2.3263479 1.2009376</code></pre>
 </div>
 </div>
 <p>The above output shows the exact location of the generated points and the associated <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> covariate values.</p>
@@ -407,10 +394,10 @@ window.Quarto = {
 <pre><code># A tibble: 4 × 10
   variable   mean median    sd   mad      q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 alpha    -2.50  -2.58  7.14  7.24  -14.0    9.59  1.00    2014.    2314.
-2 beta      2.28   2.22  0.563 0.554   1.44   3.27  1.00    2767.    2422.
-3 gamma    -2.64  -2.51  7.09  7.13  -14.7    8.85  1.00    1938.    2064.
-4 delta     0.651  0.632 0.311 0.310   0.166  1.20  1.00    2725.    2314.</code></pre>
+1 alpha    -2.35  -2.55  7.31  7.05  -14.5   9.80   1.00    1641.    1953.
+2 beta      2.20   2.14  0.672 0.658   1.19  3.38   1.00    2361.    2792.
+3 gamma    -2.46  -2.36  7.30  7.12  -14.6   9.56   1.00    1639.    1943.
+4 delta     0.188  0.175 0.475 0.469  -0.571 0.983  1.00    2532.    2677.</code></pre>
 </div>
 </div>
 <p>From the table above, we can observe that the parameters <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\delta\)</span> have been recovered. However, due to the correlation of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>, only the sum <span class="math inline">\(\alpha+\gamma\)</span> can be correctly identified. Our “true” sum of was equal to -4, and we can see the estimate here is <span class="math inline">\(~4.7\)</span>, which is reasonable given we incorporate priors and are estimating correlated parameters. The correlation between the two can be observed in the scatter plots below, as well as in the wide confidence interval of the posterior, relative to the other parameters.</p>
@@ -501,13 +488,13 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>ppd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>grid_points<span class="sc">$</span>x, <span class="at">y=</span>grid_points<span class="sc">$</span>y, <span class="at">y_rep=</span>y_ppd, <span class="at">lt=</span>lambda_thinned, <span class="at">l=</span>lambda_rep, <span class="at">b=</span>bias_rep)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ppd_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  x y        y_rep           lt         l         b
-1 1 1 0.0001666667 6.403946e-05  47737.41 146152.14
-2 2 1 0.0000000000 6.322467e-05  47850.56 144490.97
-3 3 1 0.0000000000 3.843147e-05  49064.49  98271.59
-4 4 1 0.0001666667 5.508387e-05  56667.64 115925.07
-5 5 1 0.0001666667 2.163689e-04  85146.66 256032.03
-6 6 1 0.0003333333 2.856049e-04 155584.01 205047.25</code></pre>
+<pre><code>  x y        y_rep           lt        l        b
+1 1 1 0.0001666667 0.0002704107 204183.2 382416.6
+2 2 1 0.0001666667 0.0002674064 204788.4 387245.1
+3 3 1 0.0001666667 0.0002814065 211305.0 376547.6
+4 4 1 0.0001666667 0.0003290455 253062.4 365694.4
+5 5 1 0.0005000000 0.0004833961 422045.5 355481.3
+6 6 1 0.0005000000 0.0006735152 904520.2 492274.1</code></pre>
 </div>
 </div>
 <p>It is important to notice that while the thinned intensity is ostensibly realistic in estimation, the intensity and bias are not. This is due to the specification of the Thinned Poisson Process <span class="math display">\[\lambda^* = \lambda(s)b(s)\]</span> such that <span class="math display">\[\lambda^* = \exp\left[\alpha + \beta*X(s) + \gamma + \delta*Z(s)\right]\]</span></p>
@@ -582,7 +569,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_intervals</span>(fit<span class="sc">$</span><span class="fu">draws</span>(),  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> generated_vars[<span class="dv">2</span>]) <span class="sc">+</span> plot_title</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 34 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 57 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -674,12 +661,12 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nuts_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Chain Iteration   Parameter Value
-1     1         1 treedepth__     7
+1     1         1 treedepth__     5
 2     1         2 treedepth__     7
-3     1         3 treedepth__     7
-4     1         4 treedepth__     6
-5     1         5 treedepth__     7
-6     1         6 treedepth__     6</code></pre>
+3     1         3 treedepth__     2
+4     1         4 treedepth__     7
+5     1         5 treedepth__     6
+6     1         6 treedepth__     5</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_nuts_treedepth</span>(nuts_fit, <span class="fu">log_posterior</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -741,7 +728,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_rhat</span>(<span class="fu">rhat</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 19 NAs from 'new_rhat(rhat)'.</code></pre>
+<pre><code>Warning: Dropped 4 NAs from 'new_rhat(rhat)'.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -752,7 +739,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_neff</span>(<span class="fu">neff_ratio</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 19 NAs from 'new_neff_ratio(ratio)'.</code></pre>
+<pre><code>Warning: Dropped 4 NAs from 'new_neff_ratio(ratio)'.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -776,7 +763,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/RtmpcLuvhE/thinned_poisson_process-202404291400-1-6de42a.csv, C:/Users/msavery/AppData/Local/Temp/RtmpcLuvhE/thinned_poisson_process-202404291400-2-6de42a.csv, C:/Users/msavery/AppData/Local/Temp/RtmpcLuvhE/thinned_poisson_process-202404291400-3-6de42a.csv
+<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/RtmpoVXP2y/thinned_poisson_process-202404291455-1-8e0281.csv, C:/Users/msavery/AppData/Local/Temp/RtmpoVXP2y/thinned_poisson_process-202404291455-2-8e0281.csv, C:/Users/msavery/AppData/Local/Temp/RtmpoVXP2y/thinned_poisson_process-202404291455-3-8e0281.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
