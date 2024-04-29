@@ -20,7 +20,10 @@ jobs:
         with:
           tinytex: true
 
-      - name: Add r
+      - name: install R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Add r packages
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
