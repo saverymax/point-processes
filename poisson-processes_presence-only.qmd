@@ -203,45 +203,68 @@ print(p)
 The prediction of PO observatiosn at each site is realistic, as is the thinned intensity. But alone, the intensity and bias predictive disitributions are poorly estimated.
 
 
-## Correlation between coefficients in Thinned poisson process model for presence-only data.
-EDIT FROM HERE: want to say something slightly different.
-In the above plots, we can notice that the bias and (unthinned) intensity are behaving strangely. Here we observe the effect of correlated parameters describing the behavior of the intensity and the bias the NHPP. We examine the distributions of the generated quantities using the fitted model.
+## Correlation between coefficients 
+In the above plots, it seems that the bias and unthinned intensity are behaving strangely, even though the thinned intensity is generated as we would expect. This is a manifestation of the completely correlated parameters describing the behavior of the intensity and the bias. We can notice that the generated bias and intensity alone are both really large. The issue with the large values appears this way because we are taking the mean of the posterior distribution as our point estimate and showing that in the plot of the sites above. However, when we generate the thinned intensity, we multiply each draw from the posterior predictive chain together. So even though the mean of the posterior chain is high, the individual draws of the bias and intensity inversely fluctuate around each other, due the high correlation between the two parameters.
 
-The issue with the large values is both because we are taking the mean of the posterior distribution as our point estimate, and the high correlation between the two parameters causes the estimates to inversely fluctuate around each other.
+We take a look at the posterior intervals of the estimates to get a little better idea of this.
 ```{r}
-#| label: pp-correlation
+#| label: pp-correlation-1
 #| eval: true
 plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
 p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[1]) + plot_title
 print(p_post)
+```
+The intervals shown above are for the thinned bias. These are relatively reasonable, as stated.
+```{r}
+#| label: pp-correlation-2
+#| eval: true
 p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[2]) + plot_title
 print(p_post)
+```
+However, the intervals for the intensity (unthinned) are unrealistic, due to the unindentifiable parameters.
+```{r}
+#| label: pp-correlation-3
+#| eval: true
 p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", regex_pars = generated_vars[3]) + plot_title
 print(p_post)
-# Look at counts for each site
-gen_y <- c("y_rep[1]", "y_rep[10]", "y_rep[20]")
-p_post <- mcmc_hist(fit$draws(), pars=gen_y)
-print(p_post)
+```
+And finally, the intervals of the generated bias is also not correct.
 
+Then we look at the intervals and histograms of the posterior chains for just a few chains.
+```
+{r}
+#| label: pp-correlation-4
+#| eval: true
 # The gen parameters for just a few of the sites
 gen_lambda <- c('lambda_rep[1]', 'lambda_rep[10]', 'lambda_rep[20]')
 gen_lb <- c('lambda_bias[1]', 'lambda_bias[10]', 'lambda_bias[20]')
 gen_b <- c('b_rep[1]', 'b_rep[10]', 'b_rep[20]')
 p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_lambda) + plot_title
 print(p_post)
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_b) + plot_title
+print(p_post)
+p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_lb) + plot_title
+print(p_post)
 p_post <- mcmc_hist(fit$draws(), pars = gen_lambda) 
 print(p_post)
 p_post <- mcmc_hist(fit$draws(), pars = gen_b)
 print(p_post)
-p_post <- mcmc_intervals(fit$draws(),  prob = 0.9, point_est="mean", pars = gen_lb) + plot_title
+p_post <- mcmc_hist(fit$draws(), pars = gen_lb) 
 print(p_post)
+# Look at counts for each site
+#gen_y <- c("y_rep[1]", "y_rep[10]", "y_rep[20]")
+#p_post <- mcmc_hist(fit$draws(), pars=gen_y)
+#print(p_post)
 ```
+From this we notice that the intervals for some of the generated lambdas and biases are wide, but not for the thinned values. But even for those that have wide intervals, nearly all of the chain values in the histograms are the same. This is because it's only a few values that cause the mean to be biased, due to the correlation of the parameters.
+
 The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates  for b*l since this is draw specific (where when one is high the other is low), but  the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of $\lambda$ and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I'd like to check a specific example of, for one draw.
 
+## Diagnostics
+Finally, it is possible to look at a variety of NUTS diagnostics metrics. I won't explain these in any detail for now.
 ```{r}
 #| label: nuts-diag
 #| eval: true
-# Nuts diagnostics that I haven't tried to understand really
 nuts_fit <- nuts_params(fit)
 head(nuts_fit)
 mcmc_nuts_treedepth(nuts_fit, log_posterior(fit))
@@ -252,6 +275,9 @@ mcmc_nuts_divergence(nuts_fit, log_posterior(fit))
 mcmc_nuts_energy(nuts_fit, binwidth=1/2)
 mcmc_rhat(rhat(fit))
 mcmc_neff(neff_ratio(fit))
+```
+neff is the effective sample size estimates the number of independent samples, after accounting for autocorrelation in the chains.
+
 
 ```{r}
 #| label: auto-corr
@@ -284,9 +310,9 @@ $$
 $$
 We make the same approximations as before based on our limited covariate resolution. 
 
-While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive and not practical if we will want to apply the LGCP to developing optimal designs.
+While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive as the number of locations increases. If we want to apply the LGCP to developing optimal designs (another future topic), we will need an approximation.
 
-I proceed with the stan code.
+I proceed with fitting the model in Stan.
 ```{r}
 #| label: lgcp-fit
 #| eval: false
