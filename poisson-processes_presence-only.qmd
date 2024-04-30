@@ -231,8 +231,7 @@ print(p_post)
 And finally, the intervals of the generated bias is also not correct.
 
 Then we look at the intervals and histograms of the posterior chains for just a few chains.
-```
-{r}
+```{r}
 #| label: pp-correlation-4
 #| eval: true
 # The gen parameters for just a few of the sites
@@ -261,23 +260,28 @@ From this we notice that the intervals for some of the generated lambdas and bia
 The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates  for b*l since this is draw specific (where when one is high the other is low), but  the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of $\lambda$ and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I'd like to check a specific example of, for one draw.
 
 ## Diagnostics
-Finally, it is possible to look at a variety of NUTS diagnostics metrics. I won't explain these in any detail for now.
+Finally, it is possible to look at a variety of NUTS diagnostics metrics. I am not going to go into much detail here.
 ```{r}
-#| label: nuts-diag
+#| label: nuts-diag-1
 #| eval: true
 nuts_fit <- nuts_params(fit)
-head(nuts_fit)
-mcmc_nuts_treedepth(nuts_fit, log_posterior(fit))
-mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))
 mcmc_parcoord(fit$  draws(), np=nuts_fit)
-mcmc_violin(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta'))
 mcmc_nuts_divergence(nuts_fit, log_posterior(fit))
-mcmc_nuts_energy(nuts_fit, binwidth=1/2)
+```
+The parcord plot shows 1 line per iteration of the sampler. We can see the values each sampled parameter takes on, which allows us to notice the extent that correlation has on the sampled values. If there are any divergences in the sampling, these will show up in red and help us to pick out the parameters that may be contributing. to this.
+
+There are no divergences so we don't need to worry.
+```{r}
+#| label: nuts-diag-2
+#| eval: true
 mcmc_rhat(rhat(fit))
 mcmc_neff(neff_ratio(fit))
+#mcmc_nuts_energy(nuts_fit, binwidth=1/2)
+#mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))
 ```
-neff is the effective sample size estimates the number of independent samples, after accounting for autocorrelation in the chains.
+R hat, which compares between and within chain estimates, looks good.
 
+"neff" is the effective sample size estimates the number of independent samples, after accounting for autocorrelation in the chains. The figure here shows there are a reasonable number of independent samples, though the threshold is somewhat arbitrary.
 
 ```{r}
 #| label: auto-corr
@@ -296,6 +300,9 @@ fit$cmdstan_diagnose()
 ```
 It appears we have no additional problems in the models according the the Stan diagnostics.
 
+## LGCP
+
+EDIT FROM HERE:
 We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as
 $$
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
@@ -315,7 +322,8 @@ While the topic of LGCPs on its own is quite interesting and deserves its own tr
 I proceed with fitting the model in Stan.
 ```{r}
 #| label: lgcp-fit
-#| eval: false
+#| eval: true
+#| output: FALSE
 model_string <- log_gaussian_cox_process
 write(model_string, model_path)
 # Here we need to use the distance matrix
@@ -327,19 +335,25 @@ lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_
 Having fit the LGCP we can examine the parameters.
 ```{r)
 #| label: lgcp-params
-#| eval: false
+#| eval: true
 lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
 And then we look at the posterior diagnostics.
 ```{r}
-#| label: lgcp-post 
-#| eval: false
+#| label: lgcp-chains 
+#| eval: true
 posterior <- lgcp_fit$draws()
 color_scheme_set("mix-blue-pink")
 p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
                       facet_args = list(nrow = 2, labeller = label_parsed))
 print(p_trace + facet_text(size = 15))
+```
 
+Then look at the posterior intervals
+
+```{r}
+#| label: lgcp-ints 
+#| eval: true
 plot_title <- ggtitle(paste("Posterior distributions, with means and 90% interval"))
 p_post <- mcmc_areas(posterior,  prob = 0.9, point_est="mean", regex_pars = c("alpha", "beta")) + plot_title
 print(p_post)
@@ -353,24 +367,27 @@ mcmc_intervals(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 plot_title <- ggtitle("Parameter posterior sample correlation")
 p_post <- mcmc_pairs(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 print(p_post)
+
+```{r}
+#| label: lgcp-scatter 
+#| eval: true
 mcmc_scatter(posterior, pars=c('alpha','gamma'))
 ```
 Finally look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
 ```{r}
 #| label: ppd-lgcp
-#| eval: false
+#| eval: true
 generated_vars <- c('lambda_bias', 'lambda_rep', 'b_rep', 'y_rep')
 lambda_thinned <- lgcp_fit$summary(variables=generated_vars[1])$mean
 lambda_rep <- lgcp_fit$summary(variables=generated_vars[2])$mean
 bias_rep <- lgcp_fit$summary(variables=generated_vars[3])$mean
 y_ppd <- lgcp_fit$summary(variables=generated_vars[4])$mean
 ppd_df <- data.frame(x=grid_points$x, y=grid_points$y, y_rep=y_ppd, lt=lambda_thinned, l=lambda_rep, b=bias_rep)
-head(ppd_df)
 ```
 We can then check the generated data:
 ```{r}
 #| label: lgcp-gen
-#| eval: false
+#| eval: true
 p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
     geom_tile() +
     scale_fill_viridis(discrete=FALSE) +
