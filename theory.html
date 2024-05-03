@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 2&nbsp; Poisson process theory</title>
+<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 3&nbsp; Poisson process theory</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./data_generation.html" rel="next">
-<link href="./introduction.html" rel="prev">
+<link href="./po_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +110,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./theory.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Poisson process theory</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./theory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Poisson process theory</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -149,20 +149,32 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./po_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Presence-only data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./theory.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Poisson process theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Poisson process theory</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_generation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./poisson-processes_presence-only.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
     </ul>
@@ -178,7 +190,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Poisson process theory</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Poisson process theory</span></h1>
 </div>
 
 
@@ -195,42 +207,43 @@ window.Quarto = {
 </header>
 
 
-<p>The poisson process describes a set of points <span class="math inline">\(S\)</span> where <span class="math inline">\(\{s_i\} \subseteq D\)</span> with intensity <span class="math inline">\(\lambda\)</span>. Given an area or quadrat called subregion <span class="math inline">\(A\)</span> of <span class="math inline">\(D\)</span> of size <span class="math inline">\(|A|\)</span> centered around site <span class="math inline">\(s_i\)</span> we can model the number of individuals occurring at that site <span class="math inline">\(N_{s}(A)\)</span> with a poisson distribution. This distribution will have mean <span class="math display">\[
-\Lambda(A) = \int\lambda(s)ds
-\]</span> For the demonstration here, we assume <span class="math inline">\(|A|=1\)</span>. However, the parameters in the Poisson Point Process are invariant to the scale of the data.</p>
+<p>Remember the PO data. Now let’s think about how to model it. The points you collected, they actually can be described with a very specific mathematical structure, called a Nonhomogeneuous Poisson Process (NHPP). I’ll describe the mathematical details of it now.</p>
+<p>The NHPP describes a set of points <span class="math inline">\(S\)</span> where <span class="math inline">\(\{s_i\} \subseteq D\)</span> with intensity <span class="math inline">\(\lambda\)</span>. Given an area or quadrat called subregion <span class="math inline">\(A\)</span> of <span class="math inline">\(D\)</span> of size <span class="math inline">\(|A|\)</span> centered around site <span class="math inline">\(s_i\)</span>, we can model the number of individuals, <span class="math inline">\(N_{s}(A)\)</span> occurring at that site with a poisson distribution. This distribution will have mean <span class="math display">\[
+\Lambda(A) = \int_A \lambda(s)ds.
+\]</span></p>
 <p>Typically, we model the intensity with a log-linear function, for example with parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, <span class="math display">\[
-\lambda(s) = \exp[\alpha + \beta'x(s)]
+\lambda(s) = \exp[\alpha + \beta'x(s)],
 \]</span> so that the expected number of observations in region A is now <span class="math display">\[
-\Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds
-\]</span> We quickly notice that this integral is intractable and we will need a method of numerical integration. Indeed this will be discussed and explored here.</p>
-<p>Consider, however, that we are going to be dealing with environmental data with environmental covariates, which are going to be discretized at some resolution inherently. Therefore, we can think of the inhomogenous poisson process as a continuous limit of a discretized set of conditionally independent poisson random variables, where the IPP emerges as the discretization grows smaller, i.e., <span class="math inline">\(\Lambda(ds), ds\to 0\)</span>. In fact, using this continuous limit is how the likelihood for the PP can be derived (Banerjee, 2014. p203-4). However, considering that we will be working in a discretized space, the continuous framework ends up being less practically useful.</p>
-<p>We now define the likelihood for the NHPP (Banerjee, 2014, p214) <span class="math display">\[
-f(s_1, s_2...s_n|N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n}
+\Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds.
+\]</span> We quickly notice that this integral is intractable and we will need a method of numerical integration. Indeed, this will be discussed and explored here.</p>
+<p>We now define the likelihood for the NHPP (Banerjee, 2014, p214): <span class="math display">\[
+f(s_1, s_2...s_n|N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n},
 \]</span> and the joint density will be <span class="math display">\[
-f(s_1, s_2...s_n,N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n}\left[(\lambda(D))^n\frac{\exp(-\lambda(D))}{n!}\right]
+f(s_1, s_2...s_n,N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n}\left[(\lambda(D))^n\frac{\exp(-\lambda(D))}{n!}\right],
 \]</span> where we can see the second term on the right corresponds to the poisson likelihood for the number of total observations in space <span class="math inline">\(D\)</span>. The likelihood will then be <span class="math display">\[
-L(\lambda(s)|s_1, s_2,...,s_n) = \prod_i\lambda(s_i)\frac{\exp(-\lambda(D))}{n!}
-\]</span> We can move between the continuous and discrete versions of this likelihood by partitioning <span class="math inline">\(D\)</span> into a grid of <span class="math inline">\(c\)</span> cells and taking the poisson likelihood <span class="math display">\[\begin{equation}
+L(\lambda(s)|s_1, s_2,...,s_n) = \prod_i\lambda(s_i)\frac{\exp(-\lambda(D))}{n!}.
+\]</span></p>
+<p>Notice that we are still working with the points <span class="math inline">\(s_i\)</span>. Consider, however, that we are also going to be dealing with environmental data with environmental covariates (remember the notes you took about the temperature??), which in many cases are going to be discretized at some resolution inherently. For example, satellite data only occurs at the resolution of the raster image. Therefore, we can think of the NHPP as a continuous limit of a discretized set of conditionally independent Poisson random variables, where the NHPP emerges as the discretization grows smaller, i.e., <span class="math inline">\(\lambda(ds), ds\to 0\)</span>. In fact, using this continuous limit is how the likelihood for the NHPP can be derived (Banerjee, 2014. p203-4). Considering that we will be working with covariates in a discretized space, the continuous framework ends up being less practically useful in a sense. However, there are various frameworks for thinking about this type of problem. I have described it quite simply so I can move on. The point being, I will now show how to move from the continuous setting to the discrete.</p>
+<p>To move between the continuous and discrete versions of this likelihood by partitioning <span class="math inline">\(D\)</span> into a grid of <span class="math inline">\(c\)</span> cells and taking the poisson likelihood: <span class="math display">\[\begin{equation}
 \label{eq:pp-l}
-L(\lambda) = \prod_c(\lambda(A_c))^{N(A_c)}\exp(-\lambda(A_c))
-\end{equation}\]</span> Noticing that we can sum all the exponents, we get <span class="math display">\[
-L(\lambda) = \prod_c(\lambda(A_c))^{N(A_c)}\exp(-[\lambda(A_1) + \lambda(A_2) + \cdots+\lambda(A_c)) = \prod_c(\lambda(A_c))^{N(A_c)}\exp(-\lambda(D)]
-\]</span> and <span class="math inline">\(N(A_c) = 1/0, |A_c|\to 0\)</span>. The term on the right indeed reduces to <span class="math inline">\(\ref{eq:pp-l}\)</span>. We can then safely work with the Poisson likelihood given our grid is fine enough. This will be explored later.</p>
-<p>We still have, however, one issue. We originally defined the mean of the of region <span class="math inline">\(A\)</span> according to the properties of the PP, <span class="math display">\[
-\Lambda(A) = \int_A\lambda(s)ds= \int_A\exp[\alpha + \beta'x(s)]ds
+L(\lambda) = \prod_c(\lambda(A_i))^{N(A_i)}\exp(-\lambda(A_i)).
+\end{equation}\]</span> where <span class="math inline">\(N(A_i)\)</span> is the number of points occuring in cell <span class="math inline">\(A_i\)</span>. Noticing that we can sum all the exponents, we get <span class="math display">\[
+L(\lambda) = \prod_i(\lambda(A_i))^{N(A_i)}\exp(-[\lambda(A_1) + \lambda(A_2) + \cdots+\lambda(A_c)) = \prod_i(\lambda(A_i))^{N(A_i)}\exp(-\lambda(D)],
+\]</span> where <span class="math inline">\(N(A_i) \in \{0,1\}\)</span> as <span class="math inline">\(|A_c|\to 0\)</span>. The term on the right indeed reduces to <span class="math inline">\(\ref{eq:pp-l}\)</span>. We can then safely work with the Poisson likelihood given our grid is fine enough.</p>
+<p>We still have, however, one issue. We originally defined the mean of the of region <span class="math inline">\(A\)</span> according to the properties of the NHPP, <span class="math display">\[
+\Lambda(A) = \int_A\lambda(s)ds= \int_A\exp[\alpha + \beta'x(s)]ds.
 \]</span> Suddenly we are saying that we can just work with the intensity for region <span class="math inline">\(A\)</span> without clarifying what we should do about the integral over the functional for intensity. Unfortunately, while we may want the integral over <span class="math inline">\(s\)</span>, we don’t have information at the resolution of <span class="math inline">\(ds\)</span>. All we have are covariates <span class="math inline">\(\beta'X\)</span>. That is, <span class="math display">\[
-\int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x]
-\]</span> Notice that we no longer have <span class="math inline">\(x(s)\)</span>. We assume the covariate information is relative constant over region <span class="math inline">\(A\)</span>. If this doesn’t hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson Process and more just an issue of covariate resolution which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) “In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy.”</p>
-<p>Also, originally, we mentioned that it is convenient to assume <span class="math inline">\(|A| = 1\)</span>. This is now the reason, so we don’t have to worry about the scaling factor.</p>
+\Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x].
+\]</span> Notice that we no longer have <span class="math inline">\(x(s)\)</span>. We assume the covariate information is relative constant over region <span class="math inline">\(A\)</span>. If this doesn’t hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson Process and more just an issue of covariate resolution, which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) “In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy.”</p>
+<p>For the demonstration here, we assume <span class="math inline">\(|A|=1\)</span>. However, it is important to include the area to scale the parameters appropriately, as the parameters themselves are invariant to the scale of the data. In a GLM, we call this an offset.</p>
 <p>Given this approximation and scaling assumption, we now have <span class="math display">\[
 \Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x] = \frac{|D|}{c}\exp[\alpha + \beta'x]
-\]</span> where <span class="math inline">\(c\)</span> is the number of cells and <span class="math inline">\(|D|\)</span> is our total area. Then the counts in subregion <span class="math inline">\(A\)</span> will be distributed as <span class="math display">\[
+\]</span> where <span class="math inline">\(c\)</span> is the number of cells and <span class="math inline">\(|D|\)</span> is our total area. Then the counts in subregion <span class="math inline">\(A_i\)</span> will be distributed as <span class="math display">\[
 N(A_i) \sim Poisson\left(\frac{|D|}{c}\exp[\alpha + \beta'x_i]\right) = Poisson\left(\exp[\alpha + \beta'x_i]\right)
 \]</span> if the number of cells is equal to the area <span class="math inline">\((|A| = 1)\)</span>. Based on this, we end up with the log-likelihood for our entire presence-only dataset: <span class="math display">\[
 l(\alpha, \beta) = \sum_{i\in B}N(A_i)(\alpha + \beta'x_i) - \frac{|D|}{c}\sum_{i\in B}\exp[\alpha + \beta'x_i] - \sum_{i\in B}\log(N(A_i))!
-\]</span> where <span class="math inline">\(i\in B\)</span> refers to the set of background points <span class="math inline">\(B={1,2,...,c}\)</span>. We take this likelihood over the entire set of background points in order to appropriately estimate the integral <span class="math display">\[
-\Lambda(D) = \int_D\lambda(s)ds
-\]</span> We need all points in the grid to approximate the integral, as is clear in the original likelihood. Thus, we have defined our model and the likelihood that we can use for PO data.</p>
+\]</span> where <span class="math inline">\(i\in B\)</span> refers to the set of background points <span class="math inline">\(B={1,2,...,c}\)</span>. It is necessary to use the entire set of background points in order to appropriately estimate the integral (D) = _D(s)ds from the original NHPP likelihood.</p>
+<p>With all of that, we have defined our model and the likelihood that we can use for PO data, and we have roughly established the discretized Poisson approximation to the NHPP.</p>
 
 
 
@@ -646,13 +659,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./introduction.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      <a href="./po_data.html" class="pagination-link" aria-label="Presence-only data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Presence-only data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./data_generation.html" class="pagination-link" aria-label="Presence-only data generation">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

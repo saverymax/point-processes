@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 4&nbsp; Data generation and Modelling</title>
+<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 5&nbsp; Data generation and Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./conclusion.html" rel="next">
 <link href="./data_generation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -143,7 +144,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./poisson-processes_presence-only.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./poisson-processes_presence-only.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -182,20 +183,32 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./po_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Presence-only data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Poisson process theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Poisson process theory</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_generation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./poisson-processes_presence-only.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
     </ul>
@@ -208,12 +221,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link active" data-scroll-target="#implementation"><span class="header-section-number">4.1</span> Implementation</a></li>
-  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">4.2</span> Diagnostics</a></li>
-  <li><a href="#ppd" id="toc-ppd" class="nav-link" data-scroll-target="#ppd"><span class="header-section-number">4.3</span> PPD</a></li>
-  <li><a href="#correlation-between-coefficients" id="toc-correlation-between-coefficients" class="nav-link" data-scroll-target="#correlation-between-coefficients"><span class="header-section-number">4.4</span> Correlation between coefficients</a></li>
-  <li><a href="#diagnostics-1" id="toc-diagnostics-1" class="nav-link" data-scroll-target="#diagnostics-1"><span class="header-section-number">4.5</span> Diagnostics</a></li>
-  <li><a href="#lgcp" id="toc-lgcp" class="nav-link" data-scroll-target="#lgcp"><span class="header-section-number">4.6</span> LGCP</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link active" data-scroll-target="#implementation"><span class="header-section-number">5.1</span> Implementation</a></li>
+  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">5.2</span> Diagnostics</a></li>
+  <li><a href="#ppd" id="toc-ppd" class="nav-link" data-scroll-target="#ppd"><span class="header-section-number">5.3</span> PPD</a></li>
+  <li><a href="#correlation-between-coefficients" id="toc-correlation-between-coefficients" class="nav-link" data-scroll-target="#correlation-between-coefficients"><span class="header-section-number">5.4</span> Correlation between coefficients</a></li>
+  <li><a href="#diagnostics-1" id="toc-diagnostics-1" class="nav-link" data-scroll-target="#diagnostics-1"><span class="header-section-number">5.5</span> Diagnostics</a></li>
+  <li><a href="#lgcp" id="toc-lgcp" class="nav-link" data-scroll-target="#lgcp"><span class="header-section-number">5.6</span> LGCP</a></li>
   </ul>
 </nav>
     </div>
@@ -222,7 +235,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></h1>
 </div>
 
 
@@ -252,8 +265,8 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"presence_only_functions.R"</span>)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"surface_functions.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="implementation" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="implementation"><span class="header-section-number">4.1</span> Implementation</h2>
+<section id="implementation" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="implementation"><span class="header-section-number">5.1</span> Implementation</h2>
 <p>The previous sections discussed the theoretical and practical aspects of data generation. We now proceed to implement the data generation procedure. We first generate observations at each site and create plots of observed intensities, bias, and counts. We then fit a Poisson Point Process to the generated data.</p>
 <p>We create a ring-shaped environment based on two correlated covariates and generate PO points accordingly.</p>
 <div class="cell">
@@ -278,9 +291,9 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grid_points <span class="ot">&lt;-</span> <span class="fu">get_bias_surface_correlated</span>(grid_points, aux_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Correlation between X and Z"
-          [,1]      [,2]
-[1,] 1.0000000 0.8023105
-[2,] 0.8023105 1.0000000</code></pre>
+         [,1]     [,2]
+[1,] 1.000000 0.829426
+[2,] 0.829426 1.000000</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -303,46 +316,36 @@ window.Quarto = {
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">sum</span>(sim_data<span class="sc">$</span>Y[Y_positive_indices]) <span class="sc">==</span> <span class="fu">nrow</span>(sim_data<span class="sc">$</span>coordinates))</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sim_data<span class="sc">$</span>Y_coords</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           x         y
-1   8.258390  3.332577
-2   7.833189  3.148193
-3   8.791545  2.917487
-4   9.514305  2.895499
-5   9.786536  2.944210
-6   9.915668  2.878715
-7  10.252678  2.519817
-8   5.760550  4.486816
-9   5.872959  3.687775
-10  8.483647  3.654805
-11  4.954911  4.685162
-12  5.447791  5.076430
-13  4.688796  5.111808
-14  4.814348  4.506965
-15  5.414216  4.629568
-16  4.874252  4.852133
-17  5.069891  4.625479
-18  5.684013  5.112741
-19  3.704438  6.463203
-20  3.856906  6.900197
-21  3.320863  8.250520
-22  2.619704  9.872064
-23  2.585434  9.637625
-24  2.516976 10.114937</code></pre>
+<pre><code>          x         y
+1  8.184528  3.314122
+2  8.519476  3.299914
+3  8.875100  2.612041
+4  9.840287  2.653246
+5  9.799889  2.554560
+6  5.629357  3.976328
+7  5.448773  5.301057
+8  4.592880  4.571052
+9  4.603478  5.246731
+10 5.199578  4.655172
+11 5.300851  5.094858
+12 3.764719  5.662555
+13 3.721151  6.254604
+14 2.853911  6.937763
+15 2.602734  9.284120
+16 2.620600 10.233323</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grid_points[Y_positive_indices,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    x  y     aux_x     aux_z
-28  8  3 1.7474542 0.6322763
-29  9  3 2.2578390 1.5628063
-30 10  3 2.3263479 2.1853720
-36  6  4 1.9218166 0.8553199
-38  8  4 0.9405371 2.0969530
-45  5  5 2.2578390 1.9171345
-46  6  5 1.0796015 2.1914755
-54  4  6 1.9218166 1.8609866
-64  4  7 1.7189159 1.2644815
-73  3  8 1.7474542 1.5964031
-93  3 10 2.3263479 1.2653118</code></pre>
+<pre><code>    x  y    aux_x     aux_z
+28  8  3 1.747454 1.7236321
+29  9  3 2.257839 3.0395881
+30 10  3 2.326348 1.0075442
+36  6  4 1.921817 0.8408047
+45  5  5 2.257839 1.6271448
+54  4  6 1.921817 1.2798297
+63  3  7 1.045421 0.4903408
+83  3  9 2.257839 2.5652340
+93  3 10 2.326348 2.4339077</code></pre>
 </div>
 </div>
 <p>The above output shows the exact location of the generated points and the associated <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> covariate values.</p>
@@ -408,16 +411,16 @@ window.Quarto = {
 <pre><code># A tibble: 4 × 10
   variable   mean median    sd   mad      q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 alpha    -2.17  -2.14  7.25  7.29  -14.2    9.69  1.00    2108.    2446.
-2 beta      2.18   2.15  0.531 0.525   1.37   3.09  1.00    2190.    2046.
-3 gamma    -2.60  -2.62  7.24  7.32  -14.4    9.46  1.00    2120.    2405.
-4 delta     0.531  0.531 0.485 0.475  -0.272  1.33  1.00    2781.    2919.</code></pre>
+1 alpha    -2.84  -3.00  7.24  7.17  -14.6   9.34   1.00    2041.    2117.
+2 beta      3.11   3.04  0.835 0.800   1.86  4.57   1.00    2169.    2222.
+3 gamma    -2.99  -3.03  7.19  7.20  -15.0   8.72   1.00    2079.    2254.
+4 delta    -0.262 -0.252 0.366 0.367  -0.877 0.332  1.00    2655.    2438.</code></pre>
 </div>
 </div>
 <p>From the table above, we can observe that the parameters <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\delta\)</span> have been recovered. However, due to the correlation of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>, only the sum <span class="math inline">\(\alpha+\gamma\)</span> can be correctly identified. Our “true” sum of was equal to -4, and we can see the estimate here is <span class="math inline">\(~4.7\)</span>, which is reasonable given we incorporate priors and are estimating correlated parameters. The correlation between the two can be observed in the scatter plots below, as well as in the wide confidence interval of the posterior, relative to the other parameters.</p>
 </section>
-<section id="diagnostics" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">4.2</span> Diagnostics</h2>
+<section id="diagnostics" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">5.2</span> Diagnostics</h2>
 <p>Here we check goodness of fit and Posterior Predictive Checks.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>param_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'gamma'</span>, <span class="st">'beta'</span>, <span class="st">'delta'</span>)</span>
@@ -485,8 +488,8 @@ window.Quarto = {
 </div>
 <p>There is near perfect correlation between <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>, as expected.</p>
 </section>
-<section id="ppd" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="ppd"><span class="header-section-number">4.3</span> PPD</h2>
+<section id="ppd" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="ppd"><span class="header-section-number">5.3</span> PPD</h2>
 <p>We next look at the Posterior Predictive Distribution (PPD) of the observations per site. That is, we plot the generated counts <span class="math inline">\(Y_i\)</span> for site <span class="math inline">\(s_i\)</span> on the sampling surface (grid).</p>
 <p>The PPD can be expressed as the samples from the predictive distribution of <span class="math inline">\(Y\)</span> taking into account the uncertainty surrounding the parameters. The PPD can be written as <span class="math display">\[
 p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
@@ -503,12 +506,12 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ppd_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y        y_rep           lt        l        b
-1 1 1 0.0001666667 0.0001061064 102820.3 21585593
-2 2 1 0.0003333333 0.0001528351 103043.7 35728680
-3 3 1 0.0000000000 0.0001128499 105438.8 23011573
-4 4 1 0.0000000000 0.0001368138 120331.3 25256336
-5 5 1 0.0003333333 0.0002704044 174789.5 38080322
-6 6 1 0.0005000000 0.0004130472 303863.0 31781388</code></pre>
+1 1 1 0.0001666667 7.199373e-05 1697.153 23958337
+2 2 1 0.0001666667 8.195836e-05 1702.332 32896510
+3 3 1 0.0000000000 8.400412e-05 1758.149 32704473
+4 4 1 0.0000000000 9.987791e-05 2119.245 33369782
+5 5 1 0.0001666667 1.251540e-04 3645.357 18129194
+6 6 1 0.0001666667 2.742875e-04 8627.968 26331935</code></pre>
 </div>
 </div>
 <p>It is important to notice that while the thinned intensity is ostensibly realistic in estimation, the intensity and bias are not. This is due to the specification of the Thinned Poisson Process <span class="math display">\[\lambda^* = \lambda(s)b(s)\]</span> such that <span class="math display">\[\lambda^* = \exp\left[\alpha + \beta*X(s) + \gamma + \delta*Z(s)\right]\]</span></p>
@@ -565,8 +568,8 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </div>
 <p>The prediction of PO observatiosn at each site is realistic, as is the thinned intensity. But alone, the intensity and bias predictive disitributions are poorly estimated.</p>
 </section>
-<section id="correlation-between-coefficients" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="correlation-between-coefficients"><span class="header-section-number">4.4</span> Correlation between coefficients</h2>
+<section id="correlation-between-coefficients" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="correlation-between-coefficients"><span class="header-section-number">5.4</span> Correlation between coefficients</h2>
 <p>In the above plots, it seems that the bias and unthinned intensity are behaving strangely, even though the thinned intensity is generated as we would expect. This is a manifestation of the completely correlated parameters describing the behavior of the intensity and the bias. We can notice that the generated bias and intensity alone are both really large. The issue with the large values appears this way because we are taking the mean of the posterior distribution as our point estimate and showing that in the plot of the sites above. However, when we generate the thinned intensity, we multiply each draw from the posterior predictive chain together. So even though the mean of the posterior chain is high, the individual draws of the bias and intensity inversely fluctuate around each other, due the high correlation between the two parameters.</p>
 <p>We take a look at the posterior intervals of the estimates to get a little better idea of this.</p>
 <div class="cell">
@@ -586,7 +589,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_intervals</span>(fit<span class="sc">$</span><span class="fu">draws</span>(),  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> generated_vars[<span class="dv">2</span>]) <span class="sc">+</span> plot_title</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 41 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 29 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -621,7 +624,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_intervals</span>(fit<span class="sc">$</span><span class="fu">draws</span>(),  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">pars =</span> gen_lambda) <span class="sc">+</span> plot_title</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 3 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -695,8 +698,8 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <p>From this we notice that the intervals for some of the generated lambdas and biases are wide, but not for the thinned values. But even for those that have wide intervals, nearly all of the chain values in the histograms are the same. This is because it’s only a few values that cause the mean to be biased, due to the correlation of the parameters.</p>
 <p>The take away is that the mean for the generated quantities is very skewed by the occassional large value. This high skew is caused by the correlation between b and l, since these parameters are not estimable between themselves. Therefore, we arrive at reasonable estimates for b*l since this is draw specific (where when one is high the other is low), but the overall mean for either b or l over multiple draws cannot be trusted. This is clear from the histograms of <span class="math inline">\(\lambda\)</span> and the bias, where most of the values take on very low values, but do fluctuate higher. And when one goes higher, the other goes lower, which I’d like to check a specific example of, for one draw.</p>
 </section>
-<section id="diagnostics-1" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="diagnostics-1"><span class="header-section-number">4.5</span> Diagnostics</h2>
+<section id="diagnostics-1" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="diagnostics-1"><span class="header-section-number">5.5</span> Diagnostics</h2>
 <p>Finally, it is possible to look at a variety of NUTS diagnostics metrics. I am not going to go into much detail here.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>nuts_fit <span class="ot">&lt;-</span> <span class="fu">nuts_params</span>(fit)</span>
@@ -722,7 +725,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_rhat</span>(<span class="fu">rhat</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 12 NAs from 'new_rhat(rhat)'.</code></pre>
+<pre><code>Warning: Dropped 19 NAs from 'new_rhat(rhat)'.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -733,7 +736,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_neff</span>(<span class="fu">neff_ratio</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 12 NAs from 'new_neff_ratio(ratio)'.</code></pre>
+<pre><code>Warning: Dropped 19 NAs from 'new_neff_ratio(ratio)'.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -761,7 +764,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/RtmpI1LWXc/thinned_poisson_process-202404301732-1-989a97.csv, C:/Users/msavery/AppData/Local/Temp/RtmpI1LWXc/thinned_poisson_process-202404301732-2-989a97.csv, C:/Users/msavery/AppData/Local/Temp/RtmpI1LWXc/thinned_poisson_process-202404301732-3-989a97.csv
+<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/RtmpeMUL7c/thinned_poisson_process-202405031018-1-818f2d.csv, C:/Users/msavery/AppData/Local/Temp/RtmpeMUL7c/thinned_poisson_process-202405031018-2-818f2d.csv, C:/Users/msavery/AppData/Local/Temp/RtmpeMUL7c/thinned_poisson_process-202405031018-3-818f2d.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
@@ -784,9 +787,9 @@ Processing complete, no problems detected.</code></pre>
 </div>
 <p>It appears we have no additional problems in the models according the the Stan diagnostics.</p>
 </section>
-<section id="lgcp" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="lgcp"><span class="header-section-number">4.6</span> LGCP</h2>
-<p>EDIT FROM HERE: We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as <span class="math display">\[
+<section id="lgcp" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="lgcp"><span class="header-section-number">5.6</span> LGCP</h2>
+<p>We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as <span class="math display">\[
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
 \]</span> we now add a Gaussian process to incorporate spatial correlation between sites <span class="math display">\[
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]
@@ -794,7 +797,7 @@ Processing complete, no problems detected.</code></pre>
 \Delta(A) = \int_A\lambda(s)ds = \int_A \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s) + w(s)]ds
 \]</span> We make the same approximations as before based on our limited covariate resolution.</p>
 <p>While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive as the number of locations increases. If we want to apply the LGCP to developing optimal designs (another future topic), we will need an approximation.</p>
-<p>I proceed with fitting the model in Stan.</p>
+<p>For now, I proceed with fitting the model in Stan.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>model_string <span class="ot">&lt;-</span> log_gaussian_cox_process</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(model_string, model_path)</span>
@@ -803,7 +806,7 @@ Processing complete, no problems detected.</code></pre>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(model_path)</span>
 <span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>lgcp_fit <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data=</span>data, <span class="at">seed=</span><span class="dv">13</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">iter_sampling=</span><span class="dv">2000</span>, <span class="at">iter_warmup=</span><span class="dv">200</span>, <span class="at">thin =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Having fit the LGCP we can examine the parameters. <code>{r) #| label: lgcp-params #| eval: true lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))</code> And then we look at the posterior diagnostics.</p>
+<p>Having fit the LGCP we can examine the parameters <code>{r) #| label: lgcp-params #| eval: true lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))</code> And then we look at the posterior diagnostics.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">draws</span>()</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"mix-blue-pink"</span>)</span>
@@ -1347,10 +1350,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./data_generation.html" class="pagination-link" aria-label="Presence-only data generation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Presence-only data generation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./conclusion.html" class="pagination-link" aria-label="Conclusion">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

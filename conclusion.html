@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 1&nbsp; Introduction</title>
+<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 6&nbsp; Conclusion</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./po_data.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./poisson-processes_presence-only.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./conclusion.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -114,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -144,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
@@ -161,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></h1>
 </div>
 
 
@@ -178,9 +177,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome!</p>
-<p>This is a blog post/discussion about using Nonhomogenous Poisson Point Processes for modelling Presence-Only data. This topic became a central unit of my PhD research, and so I wanted to condense the most important information about this data/model in a nice quarto document. Then I realized I could just make this into a blog post, so that is why it is here, now. In this document I discuss models for presence-only data, namely the Thinned Nonhomogenous Poisson Process (NHPP) and also, briefly, the Log Gaussian Cox Process (LGCP). The initial planned layout is as follows: Introduce presence-only data, Poisson Process models and the data generating process. Then, proceed to fit a Thinned Nonhomogenous Poisson Process in the Bayesian programming language Stan on simulated presence-only data. Finally, fit a LGCP for comparison.</p>
-<p>The rest of this document follows the above description. Please reach out to max.savery@ugent.be with any questions</p>
+<p>To summarize, I first described the necessary theory to understand the Poisson Point Process and its estimation. Importantly, by discretizing our region, we can approximate the process using the Poisson distribution to model the counts in each of the discrete sites. I then fit the Poisson Point Process in stan and took some time to discuss the unidentifiability of the thinned intensity parameterization. Finally, I fit a Log-Gaussian Cox Process and briefly discussed the fit. It is important to use the LGCP as soon as you need to incorporate spatial or temporal correlation between the points. However, to efficiently fit this model, approximations are required. This is a well-studied topic and in a future post I will take a look at some of these.</p>
 
 
 
@@ -596,14 +593,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="./poisson-processes_presence-only.html" class="pagination-link" aria-label="Data generation and Modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data generation and Modelling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./po_data.html" class="pagination-link" aria-label="Presence-only data">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Presence-only data</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
