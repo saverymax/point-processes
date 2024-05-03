@@ -8,9 +8,11 @@ book:
   chapters:
     - index.qmd
     - introduction.qmd
+    - po_data.qmd
     - theory.qmd
     - data_generation.qmd
     - poisson-processes_presence-only.qmd
+    - conclusion.qmd
 
 bibliography: references.bib
 

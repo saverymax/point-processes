@@ -1,0 +1,5 @@
+# Conclusion
+
+To summarize, I first described the necessary theory to understand the Poisson Point Process and its estimation. Importantly, by discretizing our region, we can approximate 
+the process using the Poisson distribution to model the counts in each of the discrete sites. I then fit the Poisson Point Process in stan and took some time to discuss the 
+unidentifiability of the thinned intensity parameterization. Finally, I fit a Log-Gaussian Cox Process and briefly discussed the fit. It is important to use the LGCP as soon as you need to incorporate spatial or temporal correlation between the points. However, to efficiently fit this model, approximations are required. This is a well-studied topic and in a future post I will take a look at some of these.

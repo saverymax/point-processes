@@ -302,7 +302,6 @@ It appears we have no additional problems in the models according the the Stan d
 
 ## LGCP
 
-EDIT FROM HERE:
 We next move on to incorporating spatial correlation. To do so, we fit a Log Gaussian Cox Process (LGCP). Where before we specified the intensity as
 $$
 \lambda(s) = \theta(s)b(s) = \exp[\alpha + \beta'x(s) + \gamma + \delta'z(s)]
@@ -319,7 +318,7 @@ We make the same approximations as before based on our limited covariate resolut
 
 While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive as the number of locations increases. If we want to apply the LGCP to developing optimal designs (another future topic), we will need an approximation.
 
-I proceed with fitting the model in Stan.
+For now, I proceed with fitting the model in Stan.
 ```{r}
 #| label: lgcp-fit
 #| eval: true
@@ -327,18 +326,18 @@ I proceed with fitting the model in Stan.
 model_string <- log_gaussian_cox_process
 write(model_string, model_path)
 # Here we need to use the distance matrix
-data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
+data = list(N = sites, X = grid_p   ints$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
 model <- cmdstan_model(model_path)
 lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_warmup=200, thin = 10)
 ```
 
-Having fit the LGCP we can examine the parameters.
+Having fit the LGCP we can examine the parameters
 ```{r)
 #| label: lgcp-params
 #| eval: true
 lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
 ```
-And then we look at the posterior diagnostics.
+
 ```{r}
 #| label: lgcp-chains 
 #| eval: true
@@ -348,9 +347,9 @@ p_trace <- mcmc_trace(posterior,  pars = c("alpha", "beta", "gamma", "delta"),
                       facet_args = list(nrow = 2, labeller = label_parsed))
 print(p_trace + facet_text(size = 15))
 ```
+The chains don't look perfect and it would probably be better to run the sampling algorithm for longer. But for now this is ok.
 
-Then look at the posterior intervals
-
+Then check the posterior intervals:
 ```{r}
 #| label: lgcp-ints 
 #| eval: true
@@ -367,13 +366,11 @@ mcmc_intervals(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 plot_title <- ggtitle("Parameter posterior sample correlation")
 p_post <- mcmc_pairs(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 print(p_post)
-
-```{r}
-#| label: lgcp-scatter 
-#| eval: true
-mcmc_scatter(posterior, pars=c('alpha','gamma'))
 ```
-Finally look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
+Interestingly, the $\alpha$ and $\beta$ parameters are somewhat identified. We can see that the parameters are nearly recovered, though biased slightly towards 0.
+Additionally, The credible intervals are much smaller than in the Poisson point process, indicating that the parameters are indentifiable, though the scatter plots still show some correlation.
+
+Finally we take a look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
 ```{r}
 #| label: ppd-lgcp
 #| eval: true
@@ -383,11 +380,6 @@ lambda_rep <- lgcp_fit$summary(variables=generated_vars[2])$mean
 bias_rep <- lgcp_fit$summary(variables=generated_vars[3])$mean
 y_ppd <- lgcp_fit$summary(variables=generated_vars[4])$mean
 ppd_df <- data.frame(x=grid_points$x, y=grid_points$y, y_rep=y_ppd, lt=lambda_thinned, l=lambda_rep, b=bias_rep)
-```
-We can then check the generated data:
-```{r}
-#| label: lgcp-gen
-#| eval: true
 p <- ggplot(ppd_df, aes(x, y, fill=y_rep)) + 
     geom_tile() +
     scale_fill_viridis(discrete=FALSE) +
@@ -411,4 +403,7 @@ p <- ggplot(ppd_df, aes(x, y, fill=b)) +
     ggtitle("Bias per site")
 print(p)
 ```
+This time, we get realistic estimates of $b$ and $\lambda$, before thinning.
+
+This concludes the analysis using the Poisson Point Process and LGCP.
 

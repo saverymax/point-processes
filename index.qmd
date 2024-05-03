@@ -1,5 +1,3 @@
 # Welcome {.unnumbered}
 
-This is a discussion about using Nonhomogenous Poisson Point Processes for modelling Presence-Only data. It reviews the Poisson Point Process, Presence-Only data, data generation using the process, and relevant modelling details using the Bayesian programming language Stan.
-
-Please reach out to max.savery@ugent.be with any questions
+This is a blog post by Max Savery. Please reach out to max.savery@ugent.be with any questions
