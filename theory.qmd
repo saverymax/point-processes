@@ -33,7 +33,7 @@ $$
 
 Notice that we are still working with the points $s_i$. Consider, however, that we are also going to be dealing with environmental data with environmental covariates (remember the notes you took about the temperature??), which in many cases are going to be discretized at some resolution inherently. For example, satellite data only occurs at the resolution of the raster image. Therefore, we can think of the NHPP as a continuous limit of a discretized set of conditionally independent Poisson random variables, where the NHPP emerges as the discretization grows smaller, i.e., $\lambda(ds), ds\to 0$. In fact, using this continuous limit is how the likelihood for the NHPP can be derived (Banerjee, 2014. p203-4). Considering that we will be working with covariates in a discretized space, the continuous framework ends up being less practically useful in a sense. However, there are various frameworks for thinking about this type of problem. I have described it quite simply so I can move on. The point being, I will now show how to move from the continuous setting to the discrete.
 
-To move between the continuous and discrete versions of this likelihood by partitioning $D$ into a grid of $c$ cells and taking the poisson likelihood:
+To move between the continuous and discrete versions of this likelihood, partition $D$ into a grid of $c$ cells and take the poisson likelihood:
 \begin{equation}
 \label{eq:pp-l}
 L(\lambda) = \prod_c(\lambda(A_i))^{N(A_i)}\exp(-\lambda(A_i)).
@@ -43,7 +43,7 @@ Noticing that we can sum all the exponents, we get
 $$
 L(\lambda) = \prod_i(\lambda(A_i))^{N(A_i)}\exp(-[\lambda(A_1) + \lambda(A_2) + \cdots+\lambda(A_c)) = \prod_i(\lambda(A_i))^{N(A_i)}\exp(-\lambda(D)],
 $$
-where $N(A_i) \in \{0,1\}$ as $|A_c|\to 0$. The term on the right indeed reduces to \ref{eq:pp-l}. We can then safely work with the Poisson likelihood given our grid is fine enough. 
+where $N(A_i) \in \{0,1\}$ as $|A_c|\to 0$. The term on the right indeed reduces to \eqref{eq:pp-l}. We can then safely work with the Poisson likelihood given our grid is fine enough. 
 
 We still have, however, one issue. We originally defined the mean of the of region $A$ according to the properties of the NHPP,
 $$

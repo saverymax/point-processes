@@ -4,6 +4,6 @@ I'll first quickly describe Presence-only data. It's described in many other pla
 Imagine walking in a field, looking for butterflies of a specific species. You walk randomly around, meandering so to speak. Whenever you find a butterfly of the species that you are interested in, you jot down the coordinates of your observation in your butterfly-observation moleskin journal. Maybe you also include some other information, such as the time or the temperature or type of foliage you stood upon when you saw the aforementioned butterfly. 
 
 Now you go home, and look at your notebook with a number of "presences" and coordinates written down. What you have is point data: a set of locations in continuous space where you 
-made a discrete observation of a positive presence. You didn't walk around with any meaningful planned structure and you didn't record "absences", i.e., your personal failing to detect a butterfly. If you had more structure in your life and if you recorded absences during while walking in a more structured, planned fashion, well, than that would be a different kind of data. But that is not what you have.
+made a discrete observation of a positive presence. You didn't walk around with any meaningful planned structure and you didn't record "absences", i.e., your personal failings to detect a butterfly. If you had more structure in your life and if you recorded absences during while walking in a more structured, planned fashion, well, then that would be a different kind of data. But that is not what you have.
 
-That set of points you have with coordinates is what is described as Presence-only data (referred to as PO data).
+That set of points you have, described by their coordinates, is what is called Presence-only data (referred to as PO data).
