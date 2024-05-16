@@ -326,7 +326,7 @@ For now, I proceed with fitting the model in Stan.
 model_string <- log_gaussian_cox_process
 write(model_string, model_path)
 # Here we need to use the distance matrix
-data = list(N = sites, X = grid_p   ints$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
+data = list(N = sites, X = grid_points$aux_x, Z = grid_points$aux_z, y = sim_data$Y[data_reps,], D = distance_mat)
 model <- cmdstan_model(model_path)
 lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_warmup=200, thin = 10)
 ```
