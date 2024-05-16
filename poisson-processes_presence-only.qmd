@@ -332,7 +332,7 @@ lgcp_fit <- model$sample(data=data, seed=13, chains=3, iter_sampling=2000, iter_
 ```
 
 Having fit the LGCP we can examine the parameters
-```{r)
+```{r}
 #| label: lgcp-params
 #| eval: true
 lgcp_fit$summary(variables=c('alpha', 'beta', 'gamma', 'delta'))
@@ -367,7 +367,7 @@ plot_title <- ggtitle("Parameter posterior sample correlation")
 p_post <- mcmc_pairs(posterior, pars=c('alpha', 'beta', 'gamma', 'delta'))
 print(p_post)
 ```
-Interestingly, the $\alpha$ and $\beta$ parameters are somewhat identified. We can see that the parameters are nearly recovered, though biased slightly towards 0.
+Interestingly, the $\alpha$ and $\gamma$ parameters are somewhat identified. We can see that the parameters are nearly recovered, though biased slightly towards 0.
 Additionally, The credible intervals are much smaller than in the Poisson point process, indicating that the parameters are indentifiable, though the scatter plots still show some correlation.
 
 Finally we take a look at the posterior predictions for $\lambda$, $b$, and $\lambda\cdot b$.
@@ -403,7 +403,7 @@ p <- ggplot(ppd_df, aes(x, y, fill=b)) +
     ggtitle("Bias per site")
 print(p)
 ```
-This time, we get realistic estimates of $b$ and $\lambda$, before thinning.
+This time, we get realistic estimates of $b$ and $\lambda$, before thinning. Inducing the correlation structure allows us to better recover the parameters, albeit at a high computational cost. 
 
-This concludes the analysis using the Poisson Point Process and LGCP.
+Having fit the Poisson Process and LGCP to to simulated PO data and observed the behavior of each model, we have met the goal we set out to accomplish. Hopefully this can serve as a useful resource to anyone interested the topic.
 
