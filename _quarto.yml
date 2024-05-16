@@ -4,7 +4,7 @@ project:
 book:
   title: "Thinned Nonhomogenous Poisson Processes for Presence-Only data"
   author: "Max Savery"
-  date: "28/06/2023"
+  date:  last-modified
   chapters:
     - index.qmd
     - introduction.qmd
