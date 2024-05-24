@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-05-16">
+<meta name="dcterms.date" content="2024-05-24">
 
-<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 5&nbsp; Simulation and modelling</title>
+<title>Thinned Nonhomogeneous Poisson Processes for Presence-Only data - 5&nbsp; Simulation and modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,7 +160,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Thinned Nonhomogenous Poisson Processes for Presence-Only data</a> 
+      <a href="./">Thinned Nonhomogeneous Poisson Processes for Presence-Only data</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -247,7 +247,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 16, 2024</p>
+      <p class="date">May 24, 2024</p>
     </div>
   </div>
   
@@ -299,8 +299,8 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Correlation between X and Z"
           [,1]      [,2]
-[1,] 1.0000000 0.8079464
-[2,] 0.8079464 1.0000000</code></pre>
+[1,] 1.0000000 0.8318977
+[2,] 0.8318977 1.0000000</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -324,45 +324,54 @@ window.Quarto = {
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sim_data<span class="sc">$</span>Y_coords</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           x         y
-1   7.899525  2.508977
-2   7.939502  3.488505
-3   9.380030  3.396696
-4   8.724075  3.188665
-5   9.850357  3.449179
-6  10.369851  3.240522
-7  10.321500  2.568117
-8   9.570143  2.625525
-9   9.887538  2.946144
-10  9.911838  2.825625
-11 10.166296  2.852755
-12 10.305724  3.234380
-13  8.499531  4.269306
-14  4.817324  4.945272
-15  5.286967  4.824613
-16  5.198587  5.272024
-17  4.718382  5.691679
-18  4.023006  6.853792
-19  3.231101  7.798999
-20  2.976136  7.598737
-21  2.943203  9.477578
-22  3.307922  8.527286
-23  3.157164  9.726221
-24  3.488132  9.734696
-25  2.933795 10.367458</code></pre>
+1   8.875951  1.773338
+2   8.418654  2.586547
+3   7.682086  2.968490
+4   9.443523  2.937034
+5   9.232656  3.004253
+6   9.419722  3.417642
+7   9.369643  2.645977
+8  10.242691  3.446854
+9  10.425511  3.301856
+10  9.850484  2.680007
+11  5.661172  4.209399
+12  6.244311  4.384666
+13  6.620891  3.542528
+14  6.521558  3.645729
+15  9.643957  3.970256
+16  4.693362  4.684367
+17  5.261157  4.808354
+18  7.162766  4.505626
+19  4.276170  5.821939
+20  3.873761  5.525741
+21  4.134683  6.405719
+22  1.843085  7.150085
+23  2.543938  7.697512
+24  2.708596  7.552906
+25  2.873088  9.258479
+26  2.668776  8.519745
+27  3.293108  8.620217
+28  2.620333 10.064382
+29  3.022244  9.757110
+30  3.112645 10.053107</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grid_points[Y_positive_indices,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    x  y     aux_x      aux_z
-28  8  3 1.7474542  1.8098146
-29  9  3 2.2578390  1.2325643
-30 10  3 2.3263479  2.5695850
-38  8  4 0.9405371  1.5721922
-45  5  5 2.2578390  1.2671738
-55  5  6 1.0796015 -0.1060668
-64  4  7 1.7189159  1.0624500
-73  3  8 1.7474542  1.8203891
-83  3  9 2.2578390  2.0488477
-93  3 10 2.3263479  0.6937933</code></pre>
+<pre><code>    x  y      aux_x       aux_z
+19  9  2  0.3425419  0.25429287
+28  8  3  1.7474542  2.01497588
+29  9  3  2.2578390  1.58412306
+30 10  3  2.3263479  1.22750804
+36  6  4  1.9218166  1.24545874
+37  7  4  1.7189159  1.11232836
+40 10  4  0.4314067 -0.43573796
+45  5  5  2.2578390  2.30065458
+47  7  5  0.1949836  0.02354021
+54  4  6  1.9218166  2.54440191
+62  2  7 -0.2854436 -0.59967665
+73  3  8  1.7474542  1.04834902
+83  3  9  2.2578390  1.26880450
+93  3 10  2.3263479  2.20702428</code></pre>
 </div>
 </div>
 <p>The above output shows the exact location of the generated points and the associated <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> covariate values.</p>
@@ -411,7 +420,7 @@ window.Quarto = {
 </div>
 </div>
 <p>The above plots show the PO points and the ring-shaped surface.</p>
-<p>Next we fit the Thinned Nonhomogenous Poisson Process model in Stan. We can make a few observations about this model. First, examine the likelihood: <span class="math display">\[L(\lambda|Y) = \prod^{N}_{i=1}\frac{\lambda_i^{n_i}\exp[-\lambda_i]}{n_i!}\]</span>. This is made using the assumption that the counts at sites <span class="math inline">\(s_i\)</span> are distributed following a poisson process with mean <span class="math inline">\(\lambda\)</span>. This assumption allows for a simpler specification of the likelihood, since we can use the poisson distribution. The setting of <span class="math inline">\(|A|=1\)</span> allows us to make this assumption, as we do not need to multiple the intensity parameter <span class="math inline">\(\lambda\)</span> by the area in the model.</p>
+<p>Next we fit the Thinned Nonhomogeneous Poisson Process model in Stan. We can make a few observations about this model. First, examine the likelihood: <span class="math display">\[L(\lambda|Y) = \prod^{N}_{i=1}\frac{\lambda_i^{n_i}\exp[-\lambda_i]}{n_i!}\]</span>. This is made using the assumption that the counts at sites <span class="math inline">\(s_i\)</span> are distributed following a poisson process with mean <span class="math inline">\(\lambda\)</span>. This assumption allows for a simpler specification of the likelihood, since we can use the poisson distribution. The setting of <span class="math inline">\(|A|=1\)</span> allows us to make this assumption, as we do not need to multiple the intensity parameter <span class="math inline">\(\lambda\)</span> by the area in the model.</p>
 <p>The next sections of code fitting and diagnosing the poisson process model in Stan, using the generated data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_string <span class="ot">&lt;-</span> stan_poisson_process</span>
@@ -428,10 +437,10 @@ window.Quarto = {
 <pre><code># A tibble: 4 × 10
   variable   mean median    sd   mad      q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 alpha    -2.46  -2.46  7.08  7.17  -14.3    9.37  1.00    1937.    2418.
-2 beta      2.24   2.19  0.560 0.550   1.39   3.21  1.00    2438.    2245.
-3 gamma    -2.51  -2.43  7.04  7.10  -14.4    9.07  1.00    1951.    2468.
-4 delta     0.623  0.613 0.312 0.312   0.125  1.14  1.00    2787.    2886.</code></pre>
+1 alpha    -1.36  -1.37  6.74  6.72  -12.5   9.67   1.00    1995.    2148.
+2 beta      1.81   1.81  0.386 0.372   1.18  2.45   1.00    2314.    2537.
+3 gamma    -1.42  -1.43  6.73  6.72  -12.5   9.73   1.00    2019.    2187.
+4 delta    -0.126 -0.119 0.377 0.382  -0.761 0.496  1.00    2401.    2583.</code></pre>
 </div>
 </div>
 <p>From the table above, we can observe that the parameters <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\delta\)</span> have been recovered. However, due to the correlation of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>, only the sum <span class="math inline">\(\alpha+\gamma\)</span> can be correctly identified. Our “true” sum of was equal to -4, and we can see the estimate here is <span class="math inline">\(~4.7\)</span>, which is reasonable given we incorporate priors and are estimating correlated parameters. The correlation between the two can be observed in the scatter plots below, as well as in the wide confidence interval of the posterior, relative to the other parameters.</p>
@@ -522,13 +531,13 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>ppd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>grid_points<span class="sc">$</span>x, <span class="at">y=</span>grid_points<span class="sc">$</span>y, <span class="at">y_rep=</span>y_ppd, <span class="at">lt=</span>lambda_thinned, <span class="at">l=</span>lambda_rep, <span class="at">b=</span>bias_rep)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ppd_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  x y        y_rep           lt         l       b
-1 1 1 0.0000000000 6.376147e-05  7414.540 1331838
-2 2 1 0.0000000000 6.333420e-05  7431.112 1320491
-3 3 1 0.0001666667 6.439598e-05  7608.795 1312967
-4 4 1 0.0000000000 7.172314e-05  8717.247 1284584
-5 5 1 0.0000000000 1.397359e-04 12816.260 1708944
-6 6 1 0.0000000000 5.182839e-04 22741.680 3297960</code></pre>
+<pre><code>  x y       y_rep          lt        l        b
+1 1 1 0.002000000 0.001857518 29666.24 243090.3
+2 2 1 0.001166667 0.001859585 29731.43 243665.1
+3 3 1 0.001666667 0.002067503 30430.25 263499.0
+4 4 1 0.001333333 0.002184711 34790.56 244657.8
+5 5 1 0.003500000 0.003014073 50946.62 245093.8
+6 6 1 0.005166667 0.005084997 90423.75 243710.1</code></pre>
 </div>
 </div>
 <p>It is important to notice that while the thinned intensity is ostensibly realistic in estimation, the intensity and bias are not. This is due to the specification of the Thinned Poisson Process <span class="math display">\[\lambda^* = \lambda(s)b(s)\]</span> such that <span class="math display">\[\lambda^* = \exp\left[\alpha + \beta*X(s) + \gamma + \delta*Z(s)\right]\]</span></p>
@@ -606,7 +615,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_intervals</span>(fit<span class="sc">$</span><span class="fu">draws</span>(),  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> generated_vars[<span class="dv">2</span>]) <span class="sc">+</span> plot_title</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 17 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 37 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -741,9 +750,6 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 <p>There are no divergences so we don’t need to worry.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_rhat</span>(<span class="fu">rhat</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 18 NAs from 'new_rhat(rhat)'.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -751,10 +757,7 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_neff</span>(<span class="fu">neff_ratio</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Dropped 18 NAs from 'new_neff_ratio(ratio)'.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_neff</span>(<span class="fu">neff_ratio</span>(fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -762,13 +765,13 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_nuts_energy(nuts_fit, binwidth=1/2)</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_nuts_energy(nuts_fit, binwidth=1/2)</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_nuts_acceptance(nuts_fit,  log_posterior(fit))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>R hat, which compares between and within chain estimates, looks good.</p>
 <p>“neff” is the effective sample size estimates the number of independent samples, after accounting for autocorrelation in the chains. The figure here shows there are a reasonable number of independent samples, though the threshold is somewhat arbitrary.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_acf</span>(fit<span class="sc">$</span><span class="fu">draws</span>(), <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_acf</span>(fit<span class="sc">$</span><span class="fu">draws</span>(), <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -779,9 +782,9 @@ p(\tilde{y}|Y) = \int p(\tilde{y}|\lambda, b, Y)p(\lambda, b|Y) dbd\lambda
 </div>
 <p>Autocorrelation in the chains looks well-handled.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/Rtmp6NHbSN/thinned_poisson_process-202405161031-1-958b30.csv, C:/Users/msavery/AppData/Local/Temp/Rtmp6NHbSN/thinned_poisson_process-202405161031-2-958b30.csv, C:/Users/msavery/AppData/Local/Temp/Rtmp6NHbSN/thinned_poisson_process-202405161031-3-958b30.csv
+<pre><code>Processing csv files: C:/Users/msavery/AppData/Local/Temp/RtmpG2BpUK/thinned_poisson_process-202405241050-1-52106e.csv, C:/Users/msavery/AppData/Local/Temp/RtmpG2BpUK/thinned_poisson_process-202405241050-2-52106e.csv, C:/Users/msavery/AppData/Local/Temp/RtmpG2BpUK/thinned_poisson_process-202405241050-3-52106e.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
@@ -798,9 +801,9 @@ Split R-hat values satisfactory all parameters.
 
 Processing complete, no problems detected.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leave loo out.</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#loo_results &lt;- fit$loo(variables="lp__", cores=4)</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(loo_results)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leave loo out.</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">#loo_results &lt;- fit$loo(variables="lp__", cores=4)</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(loo_results)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It appears we have no additional problems in the models according the the Stan diagnostics.</p>
 </section>
@@ -816,32 +819,32 @@ Processing complete, no problems detected.</code></pre>
 <p>While the topic of LGCPs on its own is quite interesting and deserves its own treatment, for now we examine its behavior only as an adjustment to the NHPP. In a future post I will discuss approximations to the LGCP, which are quite important as fitting the spatial correlation matrix is computationally intensive as the number of locations increases. If we want to apply the LGCP to developing optimal designs (another future topic), we will need an approximation.</p>
 <p>For now, I proceed with fitting the model in Stan.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>model_string <span class="ot">&lt;-</span> log_gaussian_cox_process</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(model_string, model_path)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we need to use the distance matrix</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">list</span>(<span class="at">N =</span> sites, <span class="at">X =</span> grid_points<span class="sc">$</span>aux_x, <span class="at">Z =</span> grid_points<span class="sc">$</span>aux_z, <span class="at">y =</span> sim_data<span class="sc">$</span>Y[data_reps,], <span class="at">D =</span> distance_mat)</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(model_path)</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>lgcp_fit <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data=</span>data, <span class="at">seed=</span><span class="dv">13</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">iter_sampling=</span><span class="dv">2000</span>, <span class="at">iter_warmup=</span><span class="dv">200</span>, <span class="at">thin =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>model_string <span class="ot">&lt;-</span> log_gaussian_cox_process</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(model_string, model_path)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we need to use the distance matrix</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">list</span>(<span class="at">N =</span> sites, <span class="at">X =</span> grid_points<span class="sc">$</span>aux_x, <span class="at">Z =</span> grid_points<span class="sc">$</span>aux_z, <span class="at">y =</span> sim_data<span class="sc">$</span>Y[data_reps,], <span class="at">D =</span> distance_mat)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(model_path)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>lgcp_fit <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data=</span>data, <span class="at">seed=</span><span class="dv">13</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">iter_sampling=</span><span class="dv">2000</span>, <span class="at">iter_warmup=</span><span class="dv">200</span>, <span class="at">thin =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having fit the LGCP we can examine the parameters</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 10
-  variable   mean median    sd   mad       q5    q95  rhat ess_bulk ess_tail
-  &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 alpha    -1.65  -1.63  0.770 0.746 -2.98    -0.363 0.999     627.     443.
-2 beta      1.45   1.47  0.363 0.361  0.876    2.01  0.999     597.     546.
-3 gamma    -1.69  -1.70  0.771 0.741 -2.91    -0.353 0.997     653.     591.
-4 delta     0.583  0.598 0.356 0.353  0.00495  1.16  0.999     591.     548.</code></pre>
+  variable    mean  median    sd   mad     q5    q95  rhat ess_bulk ess_tail
+  &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 alpha    -1.20   -1.19   0.746 0.800 -2.39  0.0364 1.00      636.     599.
+2 beta      1.49    1.50   0.361 0.352  0.889 2.08   0.999     612.     602.
+3 gamma    -1.20   -1.25   0.753 0.794 -2.40  0.0336 1.00      536.     447.
+4 delta     0.0336  0.0490 0.371 0.394 -0.587 0.622  1.00      642.     631.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">draws</span>()</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"mix-blue-pink"</span>)</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">mcmc_trace</span>(posterior,  <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>, <span class="st">"delta"</span>),</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">labeller =</span> label_parsed))</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_trace <span class="sc">+</span> <span class="fu">facet_text</span>(<span class="at">size =</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">draws</span>()</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"mix-blue-pink"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">mcmc_trace</span>(posterior,  <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>, <span class="st">"delta"</span>),</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">labeller =</span> label_parsed))</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_trace <span class="sc">+</span> <span class="fu">facet_text</span>(<span class="at">size =</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -853,9 +856,9 @@ Processing complete, no problems detected.</code></pre>
 <p>The chains don’t look perfect and it would probably be better to run the sampling algorithm for longer. But for now this is ok.</p>
 <p>Then check the posterior intervals:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Posterior distributions, with means and 90% interval"</span>))</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_areas</span>(posterior,  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> <span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"beta"</span>)) <span class="sc">+</span> plot_title</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Posterior distributions, with means and 90% interval"</span>))</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_areas</span>(posterior,  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> <span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"beta"</span>)) <span class="sc">+</span> plot_title</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -863,9 +866,9 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Posterior distributions, with means and 90% interval"</span>))</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_areas</span>(posterior,  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> <span class="fu">c</span>(<span class="st">"gamma"</span>, <span class="st">"delta"</span>)) <span class="sc">+</span> plot_title</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Posterior distributions, with means and 90% interval"</span>))</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_areas</span>(posterior,  <span class="at">prob =</span> <span class="fl">0.9</span>, <span class="at">point_est=</span><span class="st">"mean"</span>, <span class="at">regex_pars =</span> <span class="fu">c</span>(<span class="st">"gamma"</span>, <span class="st">"delta"</span>)) <span class="sc">+</span> plot_title</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -873,7 +876,7 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_intervals</span>(posterior, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_intervals</span>(posterior, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -881,10 +884,10 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_hist(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta')) </span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="st">"Parameter posterior sample correlation"</span>)</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_pairs</span>(posterior, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mcmc_hist(fit$draws(), pars = c('alpha', 'beta', 'gamma', 'delta')) </span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="st">"Parameter posterior sample correlation"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>p_post <span class="ot">&lt;-</span> <span class="fu">mcmc_pairs</span>(posterior, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">'delta'</span>))</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -896,17 +899,17 @@ Processing complete, no problems detected.</code></pre>
 <p>Interestingly, the <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> parameters are somewhat identified. We can see that the parameters are nearly recovered, though biased slightly towards 0. Additionally, The credible intervals are much smaller than in the Poisson point process, indicating that the parameters are indentifiable, though the scatter plots still show some correlation.</p>
 <p>Finally we take a look at the posterior predictions for <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(\lambda\cdot b\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>generated_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'lambda_bias'</span>, <span class="st">'lambda_rep'</span>, <span class="st">'b_rep'</span>, <span class="st">'y_rep'</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>lambda_thinned <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">1</span>])<span class="sc">$</span>mean</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>lambda_rep <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">2</span>])<span class="sc">$</span>mean</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>bias_rep <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">3</span>])<span class="sc">$</span>mean</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>y_ppd <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">4</span>])<span class="sc">$</span>mean</span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>ppd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>grid_points<span class="sc">$</span>x, <span class="at">y=</span>grid_points<span class="sc">$</span>y, <span class="at">y_rep=</span>y_ppd, <span class="at">lt=</span>lambda_thinned, <span class="at">l=</span>lambda_rep, <span class="at">b=</span>bias_rep)</span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>y_rep)) <span class="sc">+</span> </span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"PPD counts per site"</span>)</span>
-<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>generated_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'lambda_bias'</span>, <span class="st">'lambda_rep'</span>, <span class="st">'b_rep'</span>, <span class="st">'y_rep'</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>lambda_thinned <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">1</span>])<span class="sc">$</span>mean</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>lambda_rep <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">2</span>])<span class="sc">$</span>mean</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>bias_rep <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">3</span>])<span class="sc">$</span>mean</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>y_ppd <span class="ot">&lt;-</span> lgcp_fit<span class="sc">$</span><span class="fu">summary</span>(<span class="at">variables=</span>generated_vars[<span class="dv">4</span>])<span class="sc">$</span>mean</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>ppd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>grid_points<span class="sc">$</span>x, <span class="at">y=</span>grid_points<span class="sc">$</span>y, <span class="at">y_rep=</span>y_ppd, <span class="at">lt=</span>lambda_thinned, <span class="at">l=</span>lambda_rep, <span class="at">b=</span>bias_rep)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>y_rep)) <span class="sc">+</span> </span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"PPD counts per site"</span>)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -914,11 +917,11 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>lt)) <span class="sc">+</span> </span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Thinned intensity per site"</span>)</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>lt)) <span class="sc">+</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Thinned intensity per site"</span>)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -926,11 +929,11 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>l)) <span class="sc">+</span> </span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Intensity per site"</span>)</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>l)) <span class="sc">+</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Intensity per site"</span>)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -938,11 +941,11 @@ Processing complete, no problems detected.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>b)) <span class="sc">+</span> </span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Bias per site"</span>)</span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ppd_df, <span class="fu">aes</span>(x, y, <span class="at">fill=</span>b)) <span class="sc">+</span> </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Bias per site"</span>)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

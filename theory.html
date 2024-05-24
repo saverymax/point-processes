@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-05-16">
+<meta name="dcterms.date" content="2024-05-24">
 
-<title>Thinned Nonhomogenous Poisson Processes for Presence-Only data - 3&nbsp; Poisson process theory</title>
+<title>Thinned Nonhomogeneous Poisson Processes for Presence-Only data - 3&nbsp; Poisson process theory</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -126,7 +126,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Thinned Nonhomogenous Poisson Processes for Presence-Only data</a> 
+      <a href="./">Thinned Nonhomogeneous Poisson Processes for Presence-Only data</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -202,7 +202,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 16, 2024</p>
+      <p class="date">May 24, 2024</p>
     </div>
   </div>
   
@@ -214,8 +214,8 @@ window.Quarto = {
 </header>
 
 
-<p>Remember the PO data. Now let’s think about how to model it. The points you collected, they actually can be described with a very specific mathematical structure, called a Nonhomogeneuous Poisson Process (NHPP). I’ll describe the mathematical details of it now.</p>
-<p>The NHPP describes a set of points <span class="math inline">\(S\)</span> where <span class="math inline">\(\{s_i\} \subseteq D\)</span> with intensity <span class="math inline">\(\lambda\)</span>. Given an area or quadrat called subregion <span class="math inline">\(A\)</span> of <span class="math inline">\(D\)</span> of size <span class="math inline">\(|A|\)</span> centered around site <span class="math inline">\(s_i\)</span>, we can model the number of individuals, <span class="math inline">\(N_{s}(A)\)</span> occurring at that site with a poisson distribution. This distribution will have mean <span class="math display">\[
+<p>Remember the PO data. Now let’s think about how to model it. The points you collected, they actually can be described with a very specific mathematical structure, called a Nonhomogeneous Poisson Process (NHPP). I’ll describe the mathematical details of it now.</p>
+<p>The NHPP describes a set of points <span class="math inline">\(S\)</span> where <span class="math inline">\(\{s_i\} \subseteq D\)</span> with intensity <span class="math inline">\(\lambda\)</span>. Given an area or quadrat called subregion <span class="math inline">\(A\)</span> of <span class="math inline">\(D\)</span> of size <span class="math inline">\(|A|\)</span> centered around site <span class="math inline">\(s_i\)</span>, we can model the number of individuals, <span class="math inline">\(N_{s}(A)\)</span> occurring at that site with a Poisson distribution. This distribution will have mean <span class="math display">\[
 \Lambda(A) = \int_A \lambda(s)ds.
 \]</span></p>
 <p>Typically, we model the intensity with a log-linear function, for example with parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, <span class="math display">\[
@@ -227,11 +227,11 @@ window.Quarto = {
 f(s_1, s_2...s_n|N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n},
 \]</span> and the joint density will be <span class="math display">\[
 f(s_1, s_2...s_n,N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n}\left[(\lambda(D))^n\frac{\exp(-\lambda(D))}{n!}\right],
-\]</span> where we can see the second term on the right corresponds to the poisson likelihood for the number of total observations in space <span class="math inline">\(D\)</span>. The likelihood will then be <span class="math display">\[
+\]</span> where we can see the second term on the right corresponds to the Poisson likelihood for the number of total observations in space <span class="math inline">\(D\)</span>. The likelihood will then be <span class="math display">\[
 L(\lambda(s)|s_1, s_2,...,s_n) = \prod_i\lambda(s_i)\frac{\exp(-\lambda(D))}{n!}.
 \]</span></p>
 <p>Notice that we are still working with the points <span class="math inline">\(s_i\)</span>. Consider, however, that we are also going to be dealing with environmental data with environmental covariates (remember the notes you took about the temperature??), which in many cases are going to be discretized at some resolution inherently. For example, satellite data only occurs at the resolution of the raster image. Therefore, we can think of the NHPP as a continuous limit of a discretized set of conditionally independent Poisson random variables, where the NHPP emerges as the discretization grows smaller, i.e., <span class="math inline">\(\lambda(ds), ds\to 0\)</span>. In fact, using this continuous limit is how the likelihood for the NHPP can be derived (Banerjee, 2014. p203-4). Considering that we will be working with covariates in a discretized space, the continuous framework ends up being less practically useful in a sense. However, there are various frameworks for thinking about this type of problem. I have described it quite simply so I can move on. The point being, I will now show how to move from the continuous setting to the discrete.</p>
-<p>To move between the continuous and discrete versions of this likelihood, partition <span class="math inline">\(D\)</span> into a grid of <span class="math inline">\(c\)</span> cells and take the poisson likelihood: <span class="math display">\[\begin{equation}
+<p>To move between the continuous and discrete versions of this likelihood, partition <span class="math inline">\(D\)</span> into a grid of <span class="math inline">\(c\)</span> cells and take the Poisson likelihood: <span class="math display">\[\begin{equation}
 \label{eq:pp-l}
 L(\lambda) = \prod_c(\lambda(A_i))^{N(A_i)}\exp(-\lambda(A_i)).
 \end{equation}\]</span> where <span class="math inline">\(N(A_i)\)</span> is the number of points occuring in cell <span class="math inline">\(A_i\)</span>. Noticing that we can sum all the exponents, we get <span class="math display">\[
@@ -241,7 +241,7 @@ L(\lambda) = \prod_i(\lambda(A_i))^{N(A_i)}\exp(-[\lambda(A_1) + \lambda(A_2) + 
 \Lambda(A) = \int_A\lambda(s)ds= \int_A\exp[\alpha + \beta'x(s)]ds.
 \]</span> Suddenly we are saying that we can just work with the intensity for region <span class="math inline">\(A\)</span> without clarifying what we should do about the integral over the functional for intensity. Unfortunately, while we may want the integral over <span class="math inline">\(s\)</span>, we don’t have information at the resolution of <span class="math inline">\(ds\)</span>. All we have are covariates <span class="math inline">\(\beta'X\)</span>. That is, <span class="math display">\[
 \Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x].
-\]</span> Notice that we no longer have <span class="math inline">\(x(s)\)</span>. We assume the covariate information is relative constant over region <span class="math inline">\(A\)</span>. If this doesn’t hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson Process and more just an issue of covariate resolution, which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) “In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy.”</p>
+\]</span> Notice that we no longer have <span class="math inline">\(x(s)\)</span>. We assume the covariate information is relative constant over region <span class="math inline">\(A\)</span>. If this doesn’t hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson process and more just an issue of covariate resolution, which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) “In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy.”</p>
 <p>For the demonstration here, we assume <span class="math inline">\(|A|=1\)</span>. However, it is important to include the area to scale the parameters appropriately, as the parameters themselves are invariant to the scale of the data. In a GLM, we call this an offset.</p>
 <p>Given this approximation and scaling assumption, we now have <span class="math display">\[
 \Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x] = \frac{|D|}{c}\exp[\alpha + \beta'x]
