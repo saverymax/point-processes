@@ -85,7 +85,7 @@ The above plots show the PO points and the ring-shaped surface.
 source("stan_models/stan_thinned_poisson_process.R")
 model_path <- "stan_models/thinned_poisson_process.stan"
 ```
-Next we fit the Thinned Nonhomogenous Poisson Process model in Stan. We can make a few observations about this model. First, examine the likelihood: 
+Next we fit the Thinned Nonhomogeneous Poisson Process model in Stan. We can make a few observations about this model. First, examine the likelihood: 
 $$L(\lambda|Y) = \prod^{N}_{i=1}\frac{\lambda_i^{n_i}\exp[-\lambda_i]}{n_i!}$$. This is made using  the assumption that the counts at sites $s_i$ are distributed following a poisson process with mean $\lambda$. This assumption allows for a simpler specification of the likelihood, since we can use the poisson distribution. The setting of $|A|=1$ allows us to make this assumption, as we do not need to multiple the intensity parameter $\lambda$ by the area in the model.
 
 The next sections of code fitting and diagnosing the poisson process model in Stan, using the generated data.

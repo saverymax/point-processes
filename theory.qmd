@@ -1,8 +1,8 @@
 # Poisson process theory
 
-Remember the PO data. Now let's think about how to model it. The points you collected, they actually can be described with a very specific mathematical structure, called a Nonhomogeneuous Poisson Process (NHPP). I'll describe the mathematical details of it now.
+Remember the PO data. Now let's think about how to model it. The points you collected, they actually can be described with a very specific mathematical structure, called a Nonhomogeneous Poisson Process (NHPP). I'll describe the mathematical details of it now.
 
-The NHPP describes a set of points $S$ where $\{s_i\} \subseteq D$ with intensity $\lambda$. Given an area or quadrat called subregion $A$ of $D$ of size $|A|$ centered around site $s_i$, we can model the number of individuals, $N_{s}(A)$ occurring at that site with a poisson distribution. This distribution will have mean 
+The NHPP describes a set of points $S$ where $\{s_i\} \subseteq D$ with intensity $\lambda$. Given an area or quadrat called subregion $A$ of $D$ of size $|A|$ centered around site $s_i$, we can model the number of individuals, $N_{s}(A)$ occurring at that site with a Poisson distribution. This distribution will have mean 
 $$
 \Lambda(A) = \int_A \lambda(s)ds.
 $$ 
@@ -25,7 +25,7 @@ and the joint density will be
 $$
 f(s_1, s_2...s_n,N(D)=n) = \prod_i\frac{\lambda(s_i)}{(\lambda(D))^n}\left[(\lambda(D))^n\frac{\exp(-\lambda(D))}{n!}\right],
 $$
-where we can see the second term on the right corresponds to the poisson likelihood for the number of total observations in space $D$.
+where we can see the second term on the right corresponds to the Poisson likelihood for the number of total observations in space $D$.
 The likelihood will then be
 $$
 L(\lambda(s)|s_1, s_2,...,s_n) = \prod_i\lambda(s_i)\frac{\exp(-\lambda(D))}{n!}.
@@ -33,7 +33,7 @@ $$
 
 Notice that we are still working with the points $s_i$. Consider, however, that we are also going to be dealing with environmental data with environmental covariates (remember the notes you took about the temperature??), which in many cases are going to be discretized at some resolution inherently. For example, satellite data only occurs at the resolution of the raster image. Therefore, we can think of the NHPP as a continuous limit of a discretized set of conditionally independent Poisson random variables, where the NHPP emerges as the discretization grows smaller, i.e., $\lambda(ds), ds\to 0$. In fact, using this continuous limit is how the likelihood for the NHPP can be derived (Banerjee, 2014. p203-4). Considering that we will be working with covariates in a discretized space, the continuous framework ends up being less practically useful in a sense. However, there are various frameworks for thinking about this type of problem. I have described it quite simply so I can move on. The point being, I will now show how to move from the continuous setting to the discrete.
 
-To move between the continuous and discrete versions of this likelihood, partition $D$ into a grid of $c$ cells and take the poisson likelihood:
+To move between the continuous and discrete versions of this likelihood, partition $D$ into a grid of $c$ cells and take the Poisson likelihood:
 \begin{equation}
 \label{eq:pp-l}
 L(\lambda) = \prod_c(\lambda(A_i))^{N(A_i)}\exp(-\lambda(A_i)).
@@ -53,7 +53,7 @@ Suddenly we are saying that we can just work with the intensity for region $A$ w
 $$
 \Lambda(A) = \int_A\exp[\alpha + \beta'x(s)]ds \approx |A|\exp[\alpha + \beta'x].
 $$
-Notice that we no longer have $x(s)$. We assume the covariate information is relative constant over region $A$. If this doesn't hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson Process and more just an issue of covariate resolution, which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) "In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy."
+Notice that we no longer have $x(s)$. We assume the covariate information is relative constant over region $A$. If this doesn't hold, our approximation will not be correct. But, given that it is all the information we have, the assumption is built into any modelling procedure and is less an issue with the Poisson process and more just an issue of covariate resolution, which is a common modelling issue in spatial-temporal statistics. As is stated in Banerjee, 2014 (p216) "In the absence of finer covariate resolution, we cannot do better with regard to the ecological fallacy."
 
 
 For the demonstration here, we assume $|A|=1$. However, it is important to include the area to scale the parameters appropriately, as the parameters themselves are invariant
